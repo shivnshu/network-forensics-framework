@@ -50,7 +50,7 @@ def main(train_dataset_location, test_dataset_location):
     test_accuracy(clf, test_dataset_location)
 
 if __name__ == "__main__":
-    if len(len(sys.argv) > 1):
+    if (len(sys.argv) > 1):
         dataset_location = argv[1]
     else:
         dataset_location = '../dataset'

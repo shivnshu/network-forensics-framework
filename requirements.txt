@@ -1,3 +1,5 @@
 pytest
 scapy
+numpy
+scipy
 scikit-learn

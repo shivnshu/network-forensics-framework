@@ -1,3 +1,15 @@
-with import <nixpkgs> {};
+let
+    pkgs = import <nixpkgs> {};
+in
+    { stdenv ? pkgs.stdenv }:
 
-(python36.withPackages (ps: with ps; [ ipython scapy pytest scikitlearn ])).env
+    stdenv.mkDerivation {
+        name = "network-forensics";
+        buildInputs = [
+            pkgs.python3
+            pkgs.python36Packages.ipython
+            pkgs.python36Packages.scapy
+            pkgs.python36Packages.pytest
+            pkgs.python36Packages.scikitlearn
+        ];
+    }

@@ -44,7 +44,7 @@ def main(train_dataset_location, test_dataset_location):
     # print(packets)
     # print(labels)
     clf = MLPClassifier(solver='lbfgs', alpha=1e-5, \
-            hidden_layer_sizes=(4,1), random_state=1)
+            hidden_layer_sizes=(5,), random_state=1)
     clf.fit(packets, labels)
 
     test_accuracy(clf, test_dataset_location)

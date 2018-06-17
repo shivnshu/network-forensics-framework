@@ -1,4 +1,4 @@
-#!/usr/bin/env python
+#!/usr/bin/env python3
 from scapy.all import *
 import ipaddress
 import os
@@ -6,6 +6,7 @@ import sys
 import ast
 
 
+# Function to assist to extract both sided communication flow
 def full_duplex(p):
     sess = "Other"
     if 'Ether' in p:
@@ -29,17 +30,22 @@ def full_duplex(p):
     return sess
 
 
+# Main function
 def main(pcap_file):
+    # Read pcap file
     packets = rdpcap(pcap_file)
+    # Extract all sessions passing out full_duplex function
     sessions = packets.sessions(full_duplex)
 
     for session in sessions:
         session_list = ast.literal_eval(session) # convert str(list) to list
+        # Consider only SMTP communication
         if not ('TCP' in session_list and (25 in session_list or \
                                             465 in session_list or \
                                             587 in session_list)):
             continue
 
+        # list to store IP of both communicating parties
         ips = []
         for elem in session_list:
             if not type(elem) is str:
@@ -52,21 +58,27 @@ def main(pcap_file):
 
         # print(session)
         # print(ips)
+        
         assert(len(ips) == 2)
         print("Found Email conversation between", ips[0], "and", ips[1])
         print()
         for pkt in sessions[session]:
             try:
+                # Print decoded string of TCP payload of each pkt
                 print(pkt[TCP][Raw].load.decode())
             except:
                 pass
 
 
+# Script entry point
 if __name__ == "__main__":
+    # Get script absolute path
     script_dir = os.path.dirname(os.path.abspath(__file__))
+    # Usage: <script> [pcap_file]
     if (len(sys.argv) > 1):
         pcap_file = sys.argv[1]
     else:
         pcap_file = os.path.join(script_dir, '../captures/smtp.pcap')
 
+    # Main invocation
     main(pcap_file)

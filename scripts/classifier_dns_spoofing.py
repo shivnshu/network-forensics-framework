@@ -1,6 +1,7 @@
 #!/usr/bin/env python
 from sklearn.neural_network import MLPClassifier
 from scapy.all import *
+import os
 import sys
 import random
 
@@ -50,9 +51,10 @@ def main(train_dataset_location, test_dataset_location):
     test_accuracy(clf, test_dataset_location)
 
 if __name__ == "__main__":
+    script_dir = os.path.dirname(os.path.abspath(__file__))
     if (len(sys.argv) > 1):
         dataset_location = argv[1]
     else:
-        dataset_location = '../dataset'
+        dataset_location = os.path.join(script_dir, '../dataset')
     # For now, test on same dataset
     main(dataset_location, dataset_location)

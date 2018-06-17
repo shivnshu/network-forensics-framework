@@ -1,4 +1,5 @@
 #!/usr/bin/env python3
+import os
 import sys
 import ipaddress
 from scapy.all import *
@@ -105,11 +106,11 @@ def main(capture_file, darknet_file):
 
 
 if __name__ == "__main__":
+    script_dir = os.path.dirname(os.path.abspath(__file__)) + "/"
     if len(sys.argv) > 1:
         capture_file = sys.argv[1]
     else:
-        capture_file = "sample.pcap"
-
-    darknet_file = "darknet.list"
+        capture_file = os.path.join(script_dir, "../captures/sample.pcap")
+    darknet_file = os.path.join(script_dir, "darknet.list")
     main(capture_file, darknet_file)
     print(profiling_dict)

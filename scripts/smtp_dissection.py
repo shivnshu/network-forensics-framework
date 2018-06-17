@@ -1,6 +1,7 @@
 #!/usr/bin/env python
 from scapy.all import *
 import ipaddress
+import os
 import sys
 import ast
 
@@ -62,9 +63,10 @@ def main(pcap_file):
 
 
 if __name__ == "__main__":
+    script_dir = os.path.dirname(os.path.abspath(__file__))
     if (len(sys.argv) > 1):
         pcap_file = sys.argv[1]
     else:
-        pcap_file = '../captures/smtp.pcap'
+        pcap_file = os.path.join(script_dir, '../captures/smtp.pcap')
 
     main(pcap_file)

@@ -1,4 +1,5 @@
 #!/usr/bin/env python
+import os
 import sys
 from scapy.all import *
 
@@ -92,8 +93,9 @@ def main(filename):
     # print(dns_dict)
 
 if __name__ == "__main__":
+    script_dir = os.path.dirname(os.path.abspath(__file__))
     if len(sys.argv) > 1:
         filename = sys.argv[1]
     else:
-        filename = 'sample.pcap'
+        filename = os.path.join(script_dir, '../captures/sample.pcap')
     main(filename)

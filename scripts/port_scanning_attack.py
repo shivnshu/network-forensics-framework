@@ -1,4 +1,5 @@
 #!/usr/bin/env python3
+import os
 import sys
 import time
 from scapy.all import *
@@ -95,8 +96,9 @@ def main(capture_file):
 
 
 if __name__ == "__main__":
+    script_dir = os.path.dirname(os.path.abspath(__file__))
     if len(sys.argv) > 1:
         capture_file = sys.argv[1]
     else:
-        capture_file = 'sample_port_scan.pcap'
+        capture_file = os.path.join(script_dir, '../captures/sample_port_scan.pcap')
     main(capture_file)

@@ -3,6 +3,8 @@ import sys
 import time
 from scapy.all import *
 
+threshold_pkts_rate = 50
+
 tcp_flags = {
     'F': 'FIN',
     'S': 'SYN',
@@ -19,6 +21,7 @@ class ipliststruct:
         self.src_ipaddr = src_ipaddr
         self.dst_ipaddr = dst_ipaddr
         self.port_count = 1
+        self.packets_count = 1
         self.start_timestamp = start_timestamp
         self.end_timestamp = start_timestamp
         self.ports = [port]
@@ -27,10 +30,38 @@ class ipliststruct:
         self.end_timestamp = time
 
     def add_scanned_port(self, port):
+        self.packets_count += 1
         if port in self.ports:
             return
         self.ports.append(port)
         self.port_count += 1
+
+    def calculate_rate(self):
+        if self.start_timestamp == self.end_timestamp:
+            return None
+        return self.packets_count / (self.end_timestamp - self.start_timestamp)
+
+    def print(self):
+        print("Attacker IP:", self.src_ipaddr)
+        print("Victim Machine IP:", self.dst_ipaddr)
+        print("No. of ports scanned:", self.port_count)
+        category = "Normal" if self.calculate_rate() < threshold_pkts_rate else \
+                "Suspicious"
+        print("Category:", category)
+        localtime = time.localtime(self.start_timestamp)
+        start_localtime = str(localtime.tm_hour) + ":" + str(localtime.tm_min) + \
+                ":" + str(localtime.tm_sec) + " " + str(localtime.tm_mon) + "/" \
+                + str(localtime.tm_mday) + "/" + str(localtime.tm_year)
+        print("Scan Start Time:", start_localtime)
+
+        localtime = time.localtime(self.end_timestamp)
+        end_localtime = str(localtime.tm_hour) + ":" + str(localtime.tm_min) + \
+                ":" + str(localtime.tm_sec) + " " + str(localtime.tm_mon) + "/" \
+                + str(localtime.tm_mday) + "/" + str(localtime.tm_year)
+        print("Scan End Time:", end_localtime)
+        self.ports.sort()
+        print("Scanned Ports:", self.ports)
+        print()
 
 
 tcp_port_attacks = {} # Global dict to save object corresponding to (src, dst) tuple
@@ -60,14 +91,7 @@ def main(capture_file):
     # print(tcp_port_attacks)
     for dict_key in tcp_port_attacks:
         iplistobject = tcp_port_attacks[dict_key]
-        print(iplistobject.src_ipaddr)
-        print(iplistobject.dst_ipaddr)
-        print(iplistobject.port_count)
-        print(iplistobject.start_timestamp)
-        print(iplistobject.end_timestamp)
-        iplistobject.ports.sort()
-        print(iplistobject.ports)
-        print("********************")
+        iplistobject.print()
 
 
 if __name__ == "__main__":

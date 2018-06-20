@@ -1,0 +1,50 @@
+<!-- This loads of all of files that you call below from your 'static' folder -->
+{% load staticfiles %}
+<!--The static folder consists of your bootstrap files (.css, .js, fonts, etc)-->
+<!--When you load the static folders is calls all those folders in the static files without having to code each one in individually-->
+
+<html>
+
+	<head>
+		<!--This is the meta information which is good for SEO-->
+		{% block head-meta %}
+		<meta charset="utf-8">
+		<!--Add keywords that describe your project between the quotation marks. This helps search engines find and index your content-->
+		<meta http-equiv="X-UA-Compatible" content="IE=edge">
+		<meta name="viewport" content="width=device-width, initial-scale=1">
+		{% endblock %}
+
+	<!--The Block CSS is an example of what could go in your base.html file. If you already have these added into your static files then
+	there's no need to call them here because you already loaded the static files at the top of the document. If these files are already in
+	your static files then delete the 'block head-css below'-->
+
+		{% block head-css %}
+		<link href="{% static 'bootstrap/css/bootstrap.css' %}"
+			  rel="stylesheet" media="screen">
+		<link href="{% static 'bootstrap/css/bootstrap.min.css' %}"
+			  rel="stylesheet" media="screen">
+		<link href="http://maxcdn.bootstrapcdn.com/font-awesome/4.2.0/css/font-awesome.min.css" rel="stylesheet">
+		<link href="{% static 'net_forensics/custom.css' %}"
+			  rel="stylesheet" media="screen">
+		{% endblock %}
+
+	</head>
+
+
+    <!-- This is where you'll put your page content. Leave it blank for now. -->
+    <div class="container" style="padding-top: 70px;">
+        {% block content %}Nothing Here{% endblock %}
+    </div>
+
+    <!-- This is where the footer begins -->
+    <footer>
+    </footer>
+    {% block head-javascript %}
+		<script src="{% static 'bootstrap/js/bootstrap.min.js' %}"></script>
+		<script src="{% static 'bootstrap/js/bootstrap.js' %}"></script>
+		<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+		<script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
+		<script src="{% static 'net_forensics/custom.js' %}"></script>
+	{% endblock %}
+
+</html>

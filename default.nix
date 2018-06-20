@@ -11,5 +11,6 @@ in
             pkgs.python36Packages.scapy
             pkgs.python36Packages.pytest
             pkgs.python36Packages.scikitlearn
+            pkgs.python36Packages.django
         ];
     }

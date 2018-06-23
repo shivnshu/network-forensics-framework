@@ -44,6 +44,6 @@ if __name__ == "__main__":
     if len(sys.argv) > 1:
         capture_file = sys.argv[1]
     else:
-        capture_file = "../captures/sample.pcap"
+        capture_file = os.path.join(script_dir, "../captures/sample.pcap")
 
     main(capture_file)

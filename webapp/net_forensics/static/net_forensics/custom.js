@@ -6,4 +6,14 @@ $(document).ready(function(){
         document.getElementById('customFileLabel').innerHTML = file.name;
     }
 
+    var advAnalysis = function() {
+        //alert(this.value);
+        location.href = this.value + '.html';
+    }
+ 
+    var btnsAnalyse = document.getElementsByClassName("btn-analyse");
+    for (var i = 0; i < btnsAnalyse.length; i++) {
+        btnsAnalyse[i].addEventListener('click', advAnalysis, false);
+    }
+
 });

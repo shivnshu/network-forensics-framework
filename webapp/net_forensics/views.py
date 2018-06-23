@@ -1,8 +1,11 @@
 from django.shortcuts import render
 
 # Create your views here.
+import json
 from django.http import HttpResponse
 from django.core.files.storage import FileSystemStorage
+
+from .helper import protocol_hierarchy_analysis
 
 
 def index(request):
@@ -19,9 +22,11 @@ def analyse(request):
     fs = FileSystemStorage()
     filename = fs.save(myfile.name, myfile)
     uploaded_file_url = fs.url(filename)
+    chart_dict = protocol_hierarchy_analysis.main(uploaded_file_url.lstrip('/'))
     return render(request, 'analyse.html', \
             {'uploaded_file_url': uploaded_file_url, \
-             'uploaded_file_name': myfile.name})
+             'uploaded_file_name': myfile.name, \
+              'protocols_analysis_data_source': json.dumps(chart_dict) })
 
 
 def arp(request):

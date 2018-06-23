@@ -2,7 +2,6 @@
 from scapy.all import *
 import os
 import sys
-import json
 
 layer_second_candidate = ['Ethernet', '802.11']
 layer_third_candidate = ['IP', 'IPv6', 'ARP']
@@ -10,7 +9,7 @@ layer_fourth_candidate = ['TCP', 'UDP', 'ICMP']
 layer_top = ['DNS', 'NBNS query request', 'Raw']
 layers_all = [layer_second_candidate, layer_third_candidate, layer_fourth_candidate, layer_top]
 
-output = {'top': {'count':0, 'proto': {}}}
+output = {'count':0, 'proto': {}}
 
 
 def get_common_elem(l1, l2):
@@ -52,29 +51,29 @@ def check_add_layer_output(layers):
 
         if layer in layer_second_candidate:
             try:
-                output['top']['proto'][layer]
+                output['proto'][layer]
             except:
-                output['top']['proto'][layer] = {'count':0, 'proto': {}}
+                output['proto'][layer] = {'count':0, 'proto': {}}
 
         elif layer in layer_third_candidate:
             try:
-                output['top']['proto'][prev_layer]['proto'][layer]
+                output['proto'][prev_layer]['proto'][layer]
             except:
-                output['top']['proto'][prev_layer]['proto'][layer] = \
+                output['proto'][prev_layer]['proto'][layer] = \
                         {'count': 0, 'proto': {}}
 
         elif layer in layer_fourth_candidate:
             try:
-                output['top']['proto'][prevv_layer]['proto'][prev_layer]['proto'][layer]
+                output['proto'][prevv_layer]['proto'][prev_layer]['proto'][layer]
             except:
-                output['top']['proto'][prevv_layer]['proto'][prev_layer]['proto'][layer] = \
+                output['proto'][prevv_layer]['proto'][prev_layer]['proto'][layer] = \
                         {'count': 0, 'proto': {}}
 
         elif layer in layer_top:
             try:
-                output['top']['proto'][prevvv_layer]['proto'][prevv_layer]['proto'][prev_layer]['proto'][layer]
+                output['proto'][prevvv_layer]['proto'][prevv_layer]['proto'][prev_layer]['proto'][layer]
             except:
-                output['top']['proto'][prevvv_layer]['proto'][prevv_layer]['proto'][prev_layer]['proto'][layer] = \
+                output['proto'][prevvv_layer]['proto'][prevv_layer]['proto'][prev_layer]['proto'][layer] = \
                         {'count': 0, 'proto': {}}
 
 
@@ -85,14 +84,13 @@ def main(capture_file):
         layers = get_all_layers(pkt)
         # print(layers)
         check_add_layer_output(layers)
-        output['top']['count'] += 1
-        tmp_proto_dict = output['top']['proto']
+        output['count'] += 1
+        tmp_proto_dict = output['proto']
         for layer in layers:
             tmp_proto_dict[layer]['count'] += 1
             tmp_proto_dict = tmp_proto_dict[layer]['proto']
 
-    json_output = json.dumps(output)
-    print(json_output)
+    return output
 
 
 if __name__ == "__main__":
@@ -102,4 +100,4 @@ if __name__ == "__main__":
     else:
         capture_file = os.path.join(script_dir, '../captures/sample.pcap')
 
-    main(capture_file)
+    print(main(capture_file))

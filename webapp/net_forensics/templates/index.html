@@ -2,5 +2,15 @@
 
 {% block content %}
 
+<form action="analyse.html" method="post" enctype="multipart/form-data">
+    {% csrf_token %}
+    <div class="custom-file">
+        <input type="file" name="capture_file" class="custom-file-input" id="customFile" onchange="FileSelected()">
+        <label class="custom-file-label" for="customFile" id="customFileLabel">Choose capture file</label>
+    </div>
+    <div style="text-align: center; margin: 1%;">
+        <button type="submit" class="btn btn-secondary btn-lg">Analyse</button>
+    </div>
+</form>
 
 {% endblock %}

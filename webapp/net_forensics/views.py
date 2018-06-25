@@ -30,7 +30,11 @@ def analyse(request):
 
 
 def arp(request):
-    return render(request, 'arp.html')
+    ip_mac_mappings = []
+    ip_mac_mapping = {'ip':124.12, 'mac':[192.168, 123]}
+    ip_mac_mappings.append(ip_mac_mapping)
+    arp_data = {'ip_mac_mappings': ip_mac_mappings}
+    return render(request, 'arp.html', arp_data)
 
 
 def darknet(request):

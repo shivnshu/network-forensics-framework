@@ -2,28 +2,35 @@
 
 {% block content %}
 
-{% if ip_mac_mappings %}
- <div id="accordion">
-    
+<table class="table table-striped">
+  <thead>
+    <tr>
+      <th scope="col">IP Address</th>
+      <th scope="col">MAC Addresses</th>
+      <th scope="col">Timestamps</th>
+    </tr>
+  </thead>
+  <tbody>
+    {% if ip_mac_mappings %}
     {% for ip_mac_mapping in ip_mac_mappings %}
-    <div class="card">
-    <div class="card-header">
-      <a class="card-link" data-toggle="collapse" href="#collapseOne">
-          {{ ip_mac_mapping.ip }}
-      </a>
-    </div>
-    <div id="collapseOne" class="collapse show" data-parent="#accordion">
-        {% for mac in ip_mac_mapping.mac %}
-      <div class="card-body">
-          {{ mac }}
-      </div>
-      {% endfor %}
-    </div>
-  </div>
-  {% endfor %}
-
-</div> 
-{% endif %}
-
+    <tr>
+        <td>
+            <div style="">{{ ip_mac_mapping.ip }}</div>
+        </td>
+        <td>
+            {% for mac in ip_mac_mapping.mac %}
+            <div>{{ mac }}</div>
+            {% endfor %}
+        </td>
+        <td>
+            {% for timestamp in ip_mac_mapping.timestamp %}
+            <div>{{ timestamp }}</div>
+            {% endfor %}
+        </td>
+    </tr>
+    {% endfor %}
+    {% endif %}
+  </tbody>
+</table>
 
 {% endblock %}

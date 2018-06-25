@@ -50,7 +50,30 @@ class ipliststruct:
             return None
         return self.packets_count / (self.end_timestamp - self.start_timestamp)
 
-    # Pretty printing
+    def toDict(self):
+        info_dict = {}
+        info_dict['attacker_ip'] = self.src_ipaddr
+        info_dict['victim_ip'] = self.dst_ipaddr
+        info_dict['ports_count'] = self.port_count
+        category = "Normal" if self.calculate_rate() < threshold_pkts_rate else \
+                "Suspicious"
+        info_dict['category'] = category
+        localtime = time.localtime(self.start_timestamp)
+        # Pretty printing of time
+        start_localtime = str(localtime.tm_hour) + ":" + str(localtime.tm_min) + \
+                ":" + str(localtime.tm_sec) + " " + str(localtime.tm_mon) + "/" \
+                + str(localtime.tm_mday) + "/" + str(localtime.tm_year)
+        info_dict['start_time'] = start_localtime
+        localtime = time.localtime(self.end_timestamp)
+        # Pretty printing of time
+        end_localtime = str(localtime.tm_hour) + ":" + str(localtime.tm_min) + \
+                ":" + str(localtime.tm_sec) + " " + str(localtime.tm_mon) + "/" \
+                + str(localtime.tm_mday) + "/" + str(localtime.tm_year)
+        info_dict['end_time'] = end_localtime
+        self.ports.sort()
+        info_dict['scanned_ports'] = self.ports
+        return info_dict
+ 
     def print(self):
         print("Attacker IP:", self.src_ipaddr)
         print("Victim Machine IP:", self.dst_ipaddr)
@@ -107,11 +130,15 @@ def main(capture_file):
             iplistobject = ipliststruct(src_ipaddr, dst_ipaddr, timestamp, port)
             tcp_port_attacks[dict_key] = iplistobject
 
+    scanning_dict_info = []
     # print(tcp_port_attacks)
     # Pretty print each object metadata information
     for dict_key in tcp_port_attacks:
         iplistobject = tcp_port_attacks[dict_key]
-        iplistobject.print()
+        # iplistobject.print()
+        scanning_dict_info.append(iplistobject.toDict())
+
+    return scanning_dict_info
 
 
 # Script entry point
@@ -124,4 +151,4 @@ if __name__ == "__main__":
     else:
         capture_file = os.path.join(script_dir, '../captures/sample_port_scan.pcap')
     # Invoke main function
-    main(capture_file)
+    print(main(capture_file))

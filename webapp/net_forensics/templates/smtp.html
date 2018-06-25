@@ -2,6 +2,22 @@
 
 {% block content %}
 
-smtp
+{% if smtp_dissections %}
+
+{% for smtp_dissection in smtp_dissections %}
+
+{{ smtp_dissection.title }}
+
+{% for content in smtp_dissection.content %}
+
+<div style="margin: 5%;">
+{{ content }}
+</div>
+
+{% endfor %}
+
+{% endfor %}
+
+{% endif %}
 
 {% endblock %}

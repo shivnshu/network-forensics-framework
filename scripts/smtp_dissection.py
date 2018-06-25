@@ -36,6 +36,7 @@ def main(pcap_file):
     packets = rdpcap(pcap_file)
     # Extract all sessions passing out full_duplex function
     sessions = packets.sessions(full_duplex)
+    smtp_dissections = []
 
     for session in sessions:
         session_list = ast.literal_eval(session) # convert str(list) to list
@@ -60,14 +61,23 @@ def main(pcap_file):
         # print(ips)
         
         assert(len(ips) == 2)
-        print("Found Email conversation between", ips[0], "and", ips[1])
+        new_smtp_dissection_dict = {}
+        title = "Found Email conversation between " + ips[0] + " and " + ips[1]
+        print(title)
+        new_smtp_dissection_dict['title'] = title
+        new_smtp_dissection_dict['content'] = []
         print()
         for pkt in sessions[session]:
             try:
                 # Print decoded string of TCP payload of each pkt
-                print(pkt[TCP][Raw].load.decode())
+                content = pkt[TCP][Raw].load.decode()
+                # print(content)
+                new_smtp_dissection_dict['content'].append(content)
             except:
                 pass
+        smtp_dissections.append(new_smtp_dissection_dict)
+
+    return smtp_dissections
 
 
 # Script entry point
@@ -81,4 +91,4 @@ if __name__ == "__main__":
         pcap_file = os.path.join(script_dir, '../captures/smtp.pcap')
 
     # Main invocation
-    main(pcap_file)
+    print(main(pcap_file))

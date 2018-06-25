@@ -3,7 +3,7 @@ import sys
 import os
 from scapy.all import *
 
-mac_ip_dict = {} # dictionary for saving the mapping
+ip_mac_dict = {}
 
 # Main functionality
 def main(capture_file):
@@ -12,20 +12,21 @@ def main(capture_file):
     for pkt in packets:
         if not ARP in pkt: # checking the ARP Packet
                 continue
-        if not pkt[ARP].op != 2: # Filter only reply packets
+        if pkt[ARP].op != 2: # Filter only reply packets
                 continue
         mac = pkt[ARP].hwsrc # Extracting mac address
         ip = pkt[ARP].psrc  # Extracting ip address
-        if mac in mac_ip_dict:
-            if not ip in mac_ip_dict[mac]: # duplication prevention
-                mac_ip_dict[mac].append(ip)
+        timestamp = pkt.time
+        if ip in ip_mac_dict:
+            ip_mac_dict[ip].append((mac, timestamp))
         else:
-            mac_ip_dict[mac] = [ip]
+            ip_mac_dict[ip] = [(mac, timestamp)]
     # DEBUG
     # print(mac_ip_dict)
-    for mac in mac_ip_dict:
-        if len(mac_ip_dict[mac]) > 1: #checking arp spoofing
-            print("Possible ARP spoofing for MAC", mac)
+    return ip_mac_dict
+    # for mac in mac_ip_dict:
+        # if len(mac_ip_dict[mac]) > 1: #checking arp spoofing
+            # print("Possible ARP spoofing for MAC", mac)
 
 # Script Entry Point
 if __name__ == "__main__":
@@ -37,4 +38,4 @@ if __name__ == "__main__":
     else:
         # Default capture file
         capture_file = os.path.join(script_dir, "../captures/sample.pcap")
-    main(capture_file)
+    print(main(capture_file))

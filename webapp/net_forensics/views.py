@@ -6,6 +6,9 @@ from django.http import HttpResponse
 from django.core.files.storage import FileSystemStorage
 
 from .helper import protocol_hierarchy_analysis
+# from .helper import arp_analysis
+from .helper import port_scanning_analysis
+from .helper import smtp_analysis
 
 
 def index(request):
@@ -30,9 +33,9 @@ def analyse(request):
 
 
 def arp(request):
+    uploaded_file_url = request.GET.get('uploaded_file_url', '')
     ip_mac_mappings = []
-    ip_mac_mapping = {'ip':124.12, 'mac':[192.168, 123]}
-    ip_mac_mappings.append(ip_mac_mapping)
+    # ip_mac_mappings = arp_analysis.main(uploaded_file_url.lstrip('/'))
     arp_data = {'ip_mac_mappings': ip_mac_mappings}
     return render(request, 'arp.html', arp_data)
 
@@ -50,8 +53,12 @@ def dns(request):
 
 
 def port_scanning(request):
-    return render(request, 'port_scanning.html')
+    uploaded_file_url = request.GET.get('uploaded_file_url', '')
+    port_scanning_dicts = port_scanning_analysis.main(uploaded_file_url.lstrip('/'))
+    return render(request, 'port_scanning.html', {'port_scanning_dicts': port_scanning_dicts})
 
 
 def smtp(request):
-    return render(request, 'smtp.html')
+    uploaded_file_url = request.GET.get('uploaded_file_url', '')
+    smtp_dissections = smtp_analysis.main(uploaded_file_url.lstrip('/'))
+    return render(request, 'smtp.html', {'smtp_dissections': smtp_dissections})

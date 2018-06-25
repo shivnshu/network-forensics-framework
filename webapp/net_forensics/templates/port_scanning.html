@@ -2,6 +2,37 @@
 
 {% block content %}
 
-port
+{% if port_scanning_dicts %}
+
+{% for port_scanning_dict in port_scanning_dicts %}
+
+<div style="background-color: yellow; margin: 5%;">
+    <div>
+        Attacker IP: {{ port_scanning_dict.attacker_ip }}
+    </div>
+    <div>
+        Victim IP: {{ port_scanning_dict.victim_ip }}
+    </div>
+    <div>
+        Ports Count: {{ port_scanning_dict.ports_count }}
+    </div>
+    <div>
+        Category: {{ port_scanning_dict.category }}
+    </div>
+    <div>
+        Start Time: {{ port_scanning_dict.start_time }}
+    </div>
+    <div>
+        End Time: {{ port_scanning_dict.end_time }}
+    </div>
+    <div>
+        Scanned Ports: {{ port_scanning_dict.scanned_ports }}
+    </div>
+</div>
+
+
+{% endfor %}
+
+{% endif %}
 
 {% endblock %}

@@ -51,6 +51,9 @@ def dhcp(request):
 def dns(request):
     return render(request, 'dns.html')
 
+def dos(request):
+    return render(request, 'dos.html')
+
 
 def port_scanning(request):
     uploaded_file_url = request.GET.get('uploaded_file_url', '')
@@ -62,3 +65,6 @@ def smtp(request):
     uploaded_file_url = request.GET.get('uploaded_file_url', '')
     smtp_dissections = smtp_analysis.main(uploaded_file_url.lstrip('/'))
     return render(request, 'smtp.html', {'smtp_dissections': smtp_dissections})
+
+def about(request):
+    return render(request, 'about.html')

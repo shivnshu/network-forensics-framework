@@ -78,7 +78,7 @@ def main(capture_file):
             "pieborderthickness": "2",
             "piebordercolor": "#FFFFFF",
             "hoverfillcolor": "#CCCCCC",
-            "numberprefix": "$",
+            "numberPrefix": "$",
             "plottooltext": "$label, $$valueK, $percentValue",
             "theme": "fint"
         },

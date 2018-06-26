@@ -55,8 +55,11 @@ class ipliststruct:
         info_dict['attacker_ip'] = self.src_ipaddr
         info_dict['victim_ip'] = self.dst_ipaddr
         info_dict['ports_count'] = self.port_count
-        category = "Normal" if self.calculate_rate() < threshold_pkts_rate else \
+        try:
+            category = "Normal" if self.calculate_rate() < threshold_pkts_rate else \
                 "Suspicious"
+        except:
+            category = "Normal"
         info_dict['category'] = category
         localtime = time.localtime(self.start_timestamp)
         # Pretty printing of time

@@ -9,17 +9,22 @@
 
 <h4 style="font-weight: bold; margin-top:3%;">Protocol Hierarchy Analysis</h4>
 
-<div id="protocols-hierarchy-container" style="text-align: center;">FusionCharts XT will load here!</div>
+<div>
+
+    <div id="protocols-hierarchy-container" style="float: left;">Protocols Hierarchy Container</div>
+    <div id="protocols-distribution">Protocols Distribution</div>
+
+</div>
 
 
+<div style="text-align: center; clear: both;">
 <h4 style="font-weight: bold; margin-top:3%;">Advanced Analysis</h4>
-
-<div style="text-align: center;">
 
     <button type="button" class="btn btn-secondary btn-lg btn-info btn-analyse" value="arp">ARP Analysis</button>
     <button type="button" class="btn btn-secondary btn-lg btn-info btn-analyse" value="darknet">Darknet Analysis</button>
     <button type="button" class="btn btn-secondary btn-lg btn-info btn-analyse" value="dhcp">DHCP Analysis</button>
     <button type="button" class="btn btn-secondary btn-lg btn-info btn-analyse" value="dns">DNS Analysis</button>
+    <button type="button" class="btn btn-secondary btn-lg btn-info btn-analyse" value="dos">DoS Analysis</button>
     <button type="button" class="btn btn-secondary btn-lg btn-info btn-analyse" value="port_scanning">Port Scanning Analysis</button>
     <button type="button" class="btn btn-secondary btn-lg btn-info btn-analyse" value="smtp">SMTP Analysis</button>
 
@@ -58,6 +63,80 @@
         });
 
     </script>
+    <script type="text/javascript">
+		FusionCharts.ready(function () {
+		var topStores = new FusionCharts({
+			type: 'bar2D',
+			renderAt: 'protocols-distribution',
+			width: '600',
+			height: '500',
+			dataFormat: 'json',
+			dataSource: {
+				"chart": {
+					"caption": "Protocols Distribution",
+					"numberPrefix": "",
+					"numberSuffix": "%",
+					"placeValuesInside": "1",
+					"showAxisLines": "1",
+					"axisLineAlpha": "25",              
+					"alignCaptionWithCanvas": "0",
+					"showAlternateVGridColor": "0",
+                    "yAxisMaxValue": "100",
+					"theme":"fint"
+			   
+				},
+				
+				"data": [
+					{
+						"label": "Ethernet",
+						"value": "100"
+					}, 
+					{
+						"label": "IP",
+						"value": "80"
+					}, 
+					{
+						"label": "ARP",
+						"value": "20"
+					}, 
+					{
+						"label": "TCP",
+						"value": "40"
+					}, 
+					{
+						"label": "UDP",
+						"value": "30"
+					},
+                 {
+                    "label": "ICMP",
+                    "value": "20"
+                }, 
+                {
+                    "label": "Others",
+                    "value": "10"
+                }, 
+                {
+                    "label": "Raw",
+                    "value": "40"
+                }, 
+                {
+                    "label": "DNS",
+                    "value": "20"
+                }, 
+                {
+                    "label": "NBNS",
+                    "value": "20"
+                },
+                    {
+                        "label": "Others",
+                        "value": "20"
+                    }
+            ]
+        }
+    })
+    .render();
+	});
 
+    </script>
 
 {% endblock %}

@@ -2,6 +2,378 @@
 
 {% block content %}
 
-DARKNET
+<h2>Darknet Profiling</h2>
+<div style="text-align: center;">
+    <div id="packets-distribution" style="float: left;">Packets Distribution</div>
+
+    <div id="protocols-distribution" style="float: right;">Protocols Distribution</div>
+
+    <div id="src-ip-class-distribution" style="float: left;">Source IP Class Distribution</div>
+
+    <div id="dst-ip-class-distribution" style="float: right;">Destination IP Class Distribution</div>
+</div>
+
+<div id="targeted-ports" style="text-align: center;">
+    <div id="tcp-targeted-ports"></div>
+    <div id="udp-targeted-ports"></div>
+</div>
+
+{% endblock %}
+
+{% block head-javascript %}
+
+    {{ block.super }}
+
+    <script type="text/javascript">
+    FusionCharts.ready(function(){
+    var fusioncharts = new FusionCharts({
+    type: 'doughnut2d',
+    renderAt: 'packets-distribution',
+    width: '450',
+    height: '450',
+    dataFormat: 'json',
+    dataSource: {
+        "chart": {
+            "caption": "Packets Distribution",
+            "numberSufix": "%",
+            "showBorder": "1",
+            "use3DLighting": "0",
+            "enableSmartLabels": "0",
+            "startingAngle": "310",
+            "showLabels": "0",
+            "showPercentValues": "1",
+            "showLegend": "1",
+            "defaultCenterLabel": "Total: 100%",
+            "centerLabel": "$label: $value%",
+            "centerLabelBold": "1",
+            "showTooltip": "0",
+            "floats": "1",
+            "useDataPlotColorForLabels": "1",
+            "theme": "fint"
+        },
+        "data": [{
+            "label": "Scanning Traffic",
+            "value": "68.02"
+        }, {
+            "label": "Backscattering",
+            "value": "2"
+        }, {
+            "label": "Misconfiguration",
+            "value": "29.98"
+        }]
+    }
+}
+);
+    fusioncharts.render();
+    });
+    </script>
+
+    <script type="text/javascript">
+    FusionCharts.ready(function(){
+    var fusioncharts = new FusionCharts({
+    type: 'doughnut2d',
+    renderAt: 'protocols-distribution',
+    width: '450',
+    height: '450',
+    dataFormat: 'json',
+    dataSource: {
+        "chart": {
+            "caption": "Protocols Distribution",
+            "numberSufix": "%",
+            "showBorder": "1",
+            "use3DLighting": "0",
+            "enableSmartLabels": "0",
+            "startingAngle": "310",
+            "showLabels": "0",
+            "showPercentValues": "1",
+            "showLegend": "1",
+            "defaultCenterLabel": "Total: 100%",
+            "centerLabel": "$label: $value%",
+            "centerLabelBold": "1",
+            "showTooltip": "0",
+            "decimals": "0",
+            "useDataPlotColorForLabels": "1",
+            "theme": "fint"
+        },
+        "data": [{
+            "label": "TCP",
+            "value": "91.9"
+        }, {
+            "label": "UDP",
+            "value": "5.5"
+        }, {
+            "label": "ICMP",
+            "value": "2.9"
+        }, {
+            "label": "Others",
+            "value": "0.3"
+        }]
+    }
+}
+);
+    fusioncharts.render();
+    });
+    </script>
+
+    <script type="text/javascript">
+    FusionCharts.ready(function(){
+    var fusioncharts = new FusionCharts({
+    type: 'doughnut2d',
+    renderAt: 'src-ip-class-distribution',
+    width: '450',
+    height: '450',
+    dataFormat: 'json',
+    dataSource: {
+        "chart": {
+            "caption": "Source IP Class Distribution",
+            "numberSufix": "%",
+            "showBorder": "1",
+            "use3DLighting": "0",
+            "enableSmartLabels": "0",
+            "startingAngle": "310",
+            "showLabels": "0",
+            "showPercentValues": "1",
+            "showLegend": "1",
+            "defaultCenterLabel": "Total: 100%",
+            "centerLabel": "$label: $value%",
+            "centerLabelBold": "1",
+            "showTooltip": "0",
+            "decimals": "0",
+            "useDataPlotColorForLabels": "1",
+            "theme": "fint"
+        },
+        "data": [{
+            "label": "Class A",
+            "value": "62.529"
+        }, {
+            "label": "Class B",
+            "value": "18.529"
+        }, {
+            "label": "Class C",
+            "value": "18.942"
+        }]
+    }
+}
+);
+    fusioncharts.render();
+    });
+    </script>
+
+    <script type="text/javascript">
+    FusionCharts.ready(function(){
+    var fusioncharts = new FusionCharts({
+    type: 'doughnut2d',
+    renderAt: 'dst-ip-class-distribution',
+    width: '450',
+    height: '450',
+    dataFormat: 'json',
+    dataSource: {
+        "chart": {
+            "caption": "Destination IP Class Distribution",
+            "numberSufix": "%",
+            "showBorder": "1",
+            "use3DLighting": "0",
+            "enableSmartLabels": "0",
+            "startingAngle": "310",
+            "showLabels": "0",
+            "showPercentValues": "1",
+            "showLegend": "1",
+            "defaultCenterLabel": "Total: 100%",
+            "centerLabel": "$label: $value%",
+            "centerLabelBold": "1",
+            "showTooltip": "0",
+            "decimals": "0",
+            "useDataPlotColorForLabels": "1",
+            "theme": "fint"
+        },
+        "data": [{
+            "label": "Class A",
+            "value": "0.017"
+        }, {
+            "label": "Class B",
+            "value": "7.138"
+        }, {
+            "label": "Class C",
+            "value": "92.845"
+        }]
+    }
+}
+);
+    fusioncharts.render();
+    });
+    </script>
+
+<!--********************************************-->
+<script type="text/javascript">
+    FusionCharts.ready(function(){
+    var fusioncharts = new FusionCharts({
+    type: 'column2d',
+    renderAt: 'tcp-targeted-ports',
+    width: '550',
+    height: '350',
+    dataFormat: 'json',
+    dataSource: {
+        "chart": {
+            "caption": "TCP Targeted Ports",
+            "xAxisName": "Ports",
+            "yAxisName": "Packets Count",
+            "numberPrefix": "",
+            "paletteColors": "#0075c2",
+            "bgColor": "#ffffff",
+            "borderAlpha": "20",
+            "canvasBorderAlpha": "0",
+            "usePlotGradientColor": "0",
+            "plotBorderAlpha": "10",
+            "placevaluesInside": "1",
+            "rotatevalues": "1",
+            "valueFontColor": "#ffffff",
+            "showXAxisLine": "1",
+            "xAxisLineColor": "#999999",
+            "divlineColor": "#999999",
+            "divLineIsDashed": "1",
+            "showAlternateHGridColor": "0",
+            "subcaptionFontBold": "0",
+            "subcaptionFontSize": "14"
+        },
+        "data": [{
+                "label": "445",
+                "value": "420000"
+            },
+            {
+                "label": "80",
+                "value": "810000"
+            },
+            {
+                "label": "3389",
+                "value": "720000"
+            },
+            {
+                "label": "1433",
+                "value": "550000"
+            },
+            {
+                "label": "3072",
+                "value": "910000"
+            },
+            {
+                "label": "1024",
+                "value": "510000"
+            },
+            {
+                "label": "22",
+                "value": "680000"
+            },
+            {
+                "label": "8909",
+                "value": "620000"
+            },
+            {
+                "label": "139",
+                "value": "610000"
+            },
+            {
+                "label": "23",
+                "value": "490000"
+            },
+            {
+                "label": "6882",
+                "value": "900000"
+            },
+            {
+                "label": "135",
+                "value": "730000"
+            }
+        ]
+    }
+});
+    fusioncharts.render();
+    });
+</script>
+
+<script type="text/javascript">
+    FusionCharts.ready(function(){
+    var fusioncharts = new FusionCharts({
+    type: 'column2d',
+    renderAt: 'udp-targeted-ports',
+    width: '550',
+    height: '350',
+    dataFormat: 'json',
+    dataSource: {
+        "chart": {
+            "caption": "UDP Targeted Ports",
+            "xAxisName": "Ports",
+            "yAxisName": "Packets Count",
+            "numberPrefix": "",
+            "paletteColors": "#0075c2",
+            "bgColor": "#ffffff",
+            "borderAlpha": "20",
+            "canvasBorderAlpha": "0",
+            "usePlotGradientColor": "0",
+            "plotBorderAlpha": "10",
+            "placevaluesInside": "1",
+            "rotatevalues": "1",
+            "valueFontColor": "#ffffff",
+            "showXAxisLine": "1",
+            "xAxisLineColor": "#999999",
+            "divlineColor": "#999999",
+            "divLineIsDashed": "1",
+            "showAlternateHGridColor": "0",
+            "subcaptionFontBold": "0",
+            "subcaptionFontSize": "14"
+        },
+        "data": [{
+                "label": "5060",
+                "value": "420000"
+            },
+            {
+                "label": "397",
+                "value": "810000"
+            },
+            {
+                "label": "1280",
+                "value": "720000"
+            },
+            {
+                "label": "1434",
+                "value": "550000"
+            },
+            {
+                "label": "53",
+                "value": "910000"
+            },
+            {
+                "label": "1863",
+                "value": "510000"
+            },
+            {
+                "label": "6257",
+                "value": "680000"
+            },
+            {
+                "label": "137",
+                "value": "620000"
+            },
+            {
+                "label": "39455",
+                "value": "610000"
+            },
+            {
+                "label": "4647",
+                "value": "490000"
+            },
+            {
+                "label": "30247",
+                "value": "900000"
+            },
+            {
+                "label": "64055",
+                "value": "730000"
+            }
+        ]
+    }
+});
+    fusioncharts.render();
+    });
+</script>
 
 {% endblock %}

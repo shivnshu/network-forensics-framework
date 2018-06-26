@@ -26,10 +26,12 @@ def analyse(request):
     filename = fs.save(myfile.name, myfile)
     uploaded_file_url = fs.url(filename)
     chart_dict = protocol_hierarchy_analysis.main(uploaded_file_url.lstrip('/'))
+    protocol_stats_data_source = protocol_hierarchy_analysis.chart_dict_to_stats(chart_dict)
     return render(request, 'analyse.html', \
             {'uploaded_file_url': uploaded_file_url, \
              'uploaded_file_name': myfile.name, \
-              'protocols_analysis_data_source': json.dumps(chart_dict) })
+              'protocols_analysis_data_source': json.dumps(chart_dict), \
+              'protocol_stats_data_source': json.dumps(protocol_stats_data_source)})
 
 
 def arp(request):

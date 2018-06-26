@@ -6,6 +6,45 @@ import protocol_hierarchy
 
 protocol_color = {}
 
+def extract_stat_recursively(stats_dict, output_dict):
+    for stat_dict in stats_dict:
+        if not stat_dict['label'] in output_dict:
+            output_dict[stat_dict['label']] = float(stat_dict['value'])
+        else:
+            output_dict[stat_dict['label']] += float(stat_dict['value'])
+        if 'category' in stat_dict:
+            extract_stat_recursively(stat_dict['category'], output_dict)
+
+def chart_dict_to_stats(chart_dict):
+    output_dict = {}
+    output_list = []
+    stats_dict = chart_dict['category']
+    extract_stat_recursively(stats_dict, output_dict)
+    for proto in output_dict:
+        new_dict = {}
+        new_dict['label'] = proto
+        new_dict['value'] = str(output_dict[proto])
+        new_dict['color'] = protocol_color[proto]
+        output_list.append(new_dict)
+
+    protocol_stats_data_source = {
+        "chart":
+        {
+            "caption": "Protocols Distribution",
+            "numberPrefix": "",
+            "numberSuffix": " packets",
+            "placeValuesInside": "0",
+            "showAxisLines": "1",
+            "axisLineAlpha": "25",              
+            "alignCaptionWithCanvas": "0",
+            "showAlternateVGridColor": "0",
+            "theme":"fint"
+        },
+        "data": output_list
+    }
+
+    return protocol_stats_data_source
+
 def main(capture_file):
     _script_dir = os.path.dirname(os.path.abspath(__file__))
     r = open(_script_dir + "/../scripts/data/protocols.yaml")
@@ -80,5 +119,6 @@ def main(capture_file):
     }
 
     return chart_dict
+
 
 # print(main('../../../captures/sample.pcap'))

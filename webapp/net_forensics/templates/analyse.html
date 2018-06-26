@@ -71,68 +71,7 @@
 			width: '600',
 			height: '500',
 			dataFormat: 'json',
-			dataSource: {
-				"chart": {
-					"caption": "Protocols Distribution",
-					"numberPrefix": "",
-					"numberSuffix": "%",
-					"placeValuesInside": "1",
-					"showAxisLines": "1",
-					"axisLineAlpha": "25",              
-					"alignCaptionWithCanvas": "0",
-					"showAlternateVGridColor": "0",
-                    "yAxisMaxValue": "100",
-					"theme":"fint"
-			   
-				},
-				
-				"data": [
-					{
-						"label": "Ethernet",
-						"value": "100"
-					}, 
-					{
-						"label": "IP",
-						"value": "80"
-					}, 
-					{
-						"label": "ARP",
-						"value": "20"
-					}, 
-					{
-						"label": "TCP",
-						"value": "40"
-					}, 
-					{
-						"label": "UDP",
-						"value": "30"
-					},
-                 {
-                    "label": "ICMP",
-                    "value": "20"
-                }, 
-                {
-                    "label": "Others",
-                    "value": "10"
-                }, 
-                {
-                    "label": "Raw",
-                    "value": "40"
-                }, 
-                {
-                    "label": "DNS",
-                    "value": "20"
-                }, 
-                {
-                    "label": "NBNS",
-                    "value": "20"
-                },
-                    {
-                        "label": "Others",
-                        "value": "20"
-                    }
-            ]
-        }
+			dataSource: {{ protocol_stats_data_source|safe }}
     })
     .render();
 	});

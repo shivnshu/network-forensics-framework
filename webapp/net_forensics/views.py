@@ -6,7 +6,7 @@ from django.http import HttpResponse
 from django.core.files.storage import FileSystemStorage
 
 from .helper import protocol_hierarchy_analysis
-# from .helper import arp_analysis
+from .helper import arp_analysis
 from .helper import port_scanning_analysis
 from .helper import smtp_analysis
 
@@ -36,10 +36,8 @@ def analyse(request):
 
 def arp(request):
     uploaded_file_url = request.GET.get('uploaded_file_url', '')
-    ip_mac_mappings = []
-    # ip_mac_mappings = arp_analysis.main(uploaded_file_url.lstrip('/'))
-    arp_data = {'ip_mac_mappings': ip_mac_mappings}
-    return render(request, 'arp.html', arp_data)
+    chart_dict_all = arp_analysis.main(uploaded_file_url.lstrip('/'))
+    return render(request, 'arp.html', {'chart_dict_all': chart_dict_all})
 
 
 def darknet(request):

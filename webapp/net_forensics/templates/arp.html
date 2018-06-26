@@ -1,36 +1,32 @@
 {% extends 'base.html' %}
 
+{% if chart_dict_all %}
+
 {% block content %}
 
-<table class="table table-striped">
-  <thead>
-    <tr>
-      <th scope="col">IP Address</th>
-      <th scope="col">MAC Addresses</th>
-      <th scope="col">Timestamps</th>
-    </tr>
-  </thead>
-  <tbody>
-    {% if ip_mac_mappings %}
-    {% for ip_mac_mapping in ip_mac_mappings %}
-    <tr>
-        <td>
-            <div style="">{{ ip_mac_mapping.ip }}</div>
-        </td>
-        <td>
-            {% for mac in ip_mac_mapping.mac %}
-            <div>{{ mac }}</div>
-            {% endfor %}
-        </td>
-        <td>
-            {% for timestamp in ip_mac_mapping.timestamp %}
-            <div>{{ timestamp }}</div>
-            {% endfor %}
-        </td>
-    </tr>
-    {% endfor %}
-    {% endif %}
-  </tbody>
-</table>
+<div id="arp-line-series">FusionCharts XT will load here!</div>
 
 {% endblock %}
+
+{% block head-javascript %}
+
+    {{ block.super }}
+    {% for chart_dict in chart_dict_all %}
+    <script type="text/javascript">
+    FusionCharts.ready(function(){
+    var fusioncharts = new FusionCharts({
+    type: 'msline',
+    renderAt: 'arp-line-series',
+    width: '80%',
+    height: '60%',
+    dataFormat: 'json',
+    dataSource: {{ chart_dict|safe }}
+    });
+    fusioncharts.render();
+    });
+    </script>
+{% endfor %}
+
+{% endblock %}
+
+{% endif %}

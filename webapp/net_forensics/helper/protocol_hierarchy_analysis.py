@@ -1,24 +1,18 @@
 #!/usr/bin/env python3
 import sys, os
+import yaml
 sys.path.append(os.path.join(os.path.dirname(__file__), '..', 'scripts'))
 import protocol_hierarchy
 
-protocol_color = {
-    "Ethernet": "#f8bd19",
-    "802.11": "#33ccff",
-    "IP": "#ffcccc",
-    "IPv6": "#ccff66",
-    "ARP": "#00FF00",
-    "TCP": "#008000",
-    "UDP": "#FFFF00",
-    "ICMP": "#990033",
-    "DNS": "#ccccff",
-    "NBNS query request": "#996633",
-    "Raw": "#9933ff"
-}
-
+protocol_color = {}
 
 def main(capture_file):
+    _script_dir = os.path.dirname(os.path.abspath(__file__))
+    r = open(_script_dir + "/../scripts/data/protocols.yaml")
+    protocols_color_dict = yaml.load(r)
+    for protocol_color_dict in protocols_color_dict:
+        protocol_color[protocol_color_dict['name']] = protocol_color_dict['color']
+
     protocols_dict = protocol_hierarchy.main(capture_file)
     # print(protocols_dict)
     protocol_category = []

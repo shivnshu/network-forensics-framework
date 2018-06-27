@@ -4,7 +4,14 @@
 
 {% block content %}
 
-<div id="arp-line-series">FusionCharts XT will load here!</div>
+<div id="arp-line-series" style="float: left;">FusionCharts XT will load here!</div>
+<div id="arp-attacker-info">
+    <h4 style="font-weight: bold;">Attacker Information</h4>
+    <p><b>Attacker MAC Address:</b> asdcf</p>
+    <p><b>No. of spoofed packets: </b>asdfv</p>
+    <p><b>First spoofed pkt time:</b> asdf</p>
+    <p><b>Last spoofed pkt time:</b> asdf</p>
+</div>
 
 {% endblock %}
 
@@ -17,8 +24,8 @@
     var fusioncharts = new FusionCharts({
     type: 'msline',
     renderAt: 'arp-line-series',
-    width: '80%',
-    height: '60%',
+    width: '40%',
+    height: '600',
     dataFormat: 'json',
     dataSource: {{ chart_dict|safe }}
     });

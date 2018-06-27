@@ -16,3 +16,29 @@
 .table div {
     margin: 2%;
 }
+
+#arp-attacker-info {
+    position: absolute;
+    right: 10%;
+    top: 30%;
+}
+
+#arp-attacker-info p{
+    margin: 0;
+    padding: 0;
+}
+
+.port-scanning-line {
+    width: 100%;
+    height: 0%;
+    border-bottom: 1px solid black;
+}
+
+.port-scanning-info div {
+    text-align: center;
+}
+
+.port-scanning-info div p {
+    margin: 0;
+    padding: 0;
+}

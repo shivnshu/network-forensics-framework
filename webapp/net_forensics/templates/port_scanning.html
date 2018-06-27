@@ -1,38 +1,39 @@
 {% extends 'base.html' %}
+{% load staticfiles %}
 
 {% block content %}
-
 {% if port_scanning_dicts %}
-
 {% for port_scanning_dict in port_scanning_dicts %}
 
-<div style="background-color: yellow; margin: 5%;">
-    <div>
-        Attacker IP: {{ port_scanning_dict.attacker_ip }}
+<div class="row port-scanning-info">
+    <div class="col-3">
+        <img src="{% static 'img/desktop.png' %}">
     </div>
-    <div>
-        Victim IP: {{ port_scanning_dict.victim_ip }}
+    <div class="col-6" style="padding-top: 30px;">
+        <div class="port-scanning-line"></div>
     </div>
-    <div>
-        Ports Count: {{ port_scanning_dict.ports_count }}
-    </div>
-    <div>
-        Category: {{ port_scanning_dict.category }}
-    </div>
-    <div>
-        Start Time: {{ port_scanning_dict.start_time }}
-    </div>
-    <div>
-        End Time: {{ port_scanning_dict.end_time }}
-    </div>
-    <div>
-        Scanned Ports: {{ port_scanning_dict.scanned_ports }}
+    <div class="col-3">
+        <img src="{% static 'img/desktop.png' %}">
     </div>
 </div>
 
 
+<div class="row port-scanning-info">
+    <div class="col-3">
+        <p><b>Attacker IP: </b>{{ port_scanning_dict.attacker_ip }}</p>
+    </div>
+    <div class="col-6">
+        <p><b>Ports count: </b>{{ port_scanning_dict.ports_count }}</p>
+        <p><b>Category: </b>{{ port_scanning_dict.category }}</p>
+        <p><b>Scan start time: </b>{{ port_scanning_dict.start_time }}</p>
+        <p><b>Scan end time: </b>{{ port_scanning_dict.end_time }}</p>
+        {{ port_scanning_dict.scanned_ports }}
+    </div>
+    <div class="col-3">
+        <p><b>Victim IP: </b>{{ port_scanning_dict.victim_ip }}</p>
+    </div>
+</div>
+
 {% endfor %}
-
 {% endif %}
-
 {% endblock %}

@@ -3,3 +3,5 @@ scapy
 numpy
 scipy
 scikit-learn
+django
+pyyaml

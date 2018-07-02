@@ -30,12 +30,16 @@ def main(capture_file):
         for mac in ip_mac_dict[ip]:
             timestamp_mac_dict = ip_mac_dict[ip][mac]
             data_list = []
+            cumulative_val = 0
             for t in timestamp_list:
                 new_dict = {}
                 try:
-                    new_dict["value"] = timestamp_mac_dict[t]
+                    cumulative_val += timestamp_mac_dict[t]
+                    # new_dict["value"] = timestamp_mac_dict[t]
+                    new_dict["value"] = cumulative_val
                 except:
-                    new_dict["value"] = 0
+                    # new_dict["value"] = 0
+                    new_dict["value"] = cumulative_val
                 data_list.append(new_dict)
             new_dict = {}
             new_dict["seriesname"] = mac

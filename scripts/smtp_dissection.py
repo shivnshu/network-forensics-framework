@@ -71,7 +71,7 @@ def main(pcap_file):
             try:
                 # Print decoded string of TCP payload of each pkt
                 content = pkt[TCP][Raw].load.decode()
-                # print(content)
+                print(content)
                 new_smtp_dissection_dict['content'].append(content)
             except:
                 pass
@@ -91,4 +91,4 @@ if __name__ == "__main__":
         pcap_file = os.path.join(script_dir, '../captures/smtp.pcap')
 
     # Main invocation
-    print(main(pcap_file))
+    main(pcap_file)

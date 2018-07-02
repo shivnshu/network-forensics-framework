@@ -14,6 +14,7 @@ to_be_deleted_from_dns_time_diction = set()
 time_window = 5 # in seconds
 
 output_list = []
+dns_spoofing_timing_info = {}
 
 def duplicate_exists(ans_list):
     ans_response_list = []
@@ -127,6 +128,9 @@ def store_detect(pkt):
 
         if not new_dict in output_list:
             output_list.append(new_dict)
+            dns_spoofing_timing_info[output_list.index(new_dict)] = [int(pkt.time)]
+        else:
+            dns_spoofing_timing_info[output_list.index(new_dict)].append(int(pkt.time))
 
         # If greater than or equal to 2, Alert
         # print('DETECT: ID: %s Domain: %s Dst: %s:%s Src: %s:%s Answers: %s' \
@@ -136,11 +140,17 @@ def store_detect(pkt):
 
 # Main function
 def main(filename):
+    global output_list
+    output_list = []
+    global dns_spoofing_timing_info
+    dns_spoofing_timing_info = {}
     # Read pcap file and send each to its pkt to store_detect()
     packets = rdpcap(filename)
     for pkt in packets:
         store_detect(pkt)
     # print(dns_dict)
+    for i in dns_spoofing_timing_info:
+        output_list[i]["timestamps"] = dns_spoofing_timing_info[i].copy()
     return output_list
 
 # Script entry point
@@ -154,3 +164,6 @@ if __name__ == "__main__":
         filename = os.path.join(script_dir, '../captures/sample.pcap')
     main(filename)
     # print(output_list)
+    # print(len(output_list))
+    # print()
+    # print(dns_spoofing_timing_info)

@@ -42,3 +42,17 @@
     margin: 0;
     padding: 0;
 }
+.dns-connection-line {
+    width: 100%;
+    height: 0%;
+    border-bottom: 1px solid black;
+}
+
+.dns-connection-info div {
+    text-align: center;
+}
+
+.dns-connection-info div p {
+    margin: 0;
+    padding: 0;
+}

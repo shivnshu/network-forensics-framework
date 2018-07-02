@@ -1,6 +1,7 @@
 #!/usr/bin/env python3
 import os
 import sys
+import ast
 from scapy.all import *
 
 # Dict with DNS id as key and set of request/response tuple as data
@@ -12,6 +13,18 @@ to_be_deleted_from_dns_time_diction = set()
 # Timing window to be considered for expiry definition
 time_window = 5 # in seconds
 
+output_list = []
+
+def duplicate_exists(ans_list):
+    ans_response_list = []
+    for i in range(len(ans_list)):
+        ans_list[i]['answers'].sort()
+        ans = ans_list[i]['answers']
+        if not ans in ans_response_list:
+            ans_response_list.append(ans)
+    if len(ans_response_list) > 1:
+        return False
+    return True
 
 def purge_expired_pkts(pkt): # DNS pkt
     min_allowed_time = pkt.time - time_window
@@ -65,37 +78,60 @@ def store_detect(pkt):
         count = dns.ancount # no. of answers
 
         if (count == 0):
-            ans = "null"
+            ans = []
         elif (count == 1):
-            ans = dns.an.rdata
+            ans = [dns.an.rdata]
         else:
-            ans = ""
+            # ans = ""
+            ans = []
             l = dns.an
             for i in range(count):
                 if (l.type == 1):
-                    ans = (l.rdata) + "," + ans
+                    # ans = (l.rdata) + "," + ans
+                    ans.append(l.rdata)
                 l = l.payload
-            ans = ans[:len(ans)-1]
+            # ans = ans[:len(ans)-1]
 
-        t = ('Ans', ip.src, ip.dst, dns.qd.qname, ans)
+        t = ('Ans', ip.src, ip.dst, dns.qd.qname, str(ans))
         dns_dict[dns.id].add(t)
 
     # Spoofing Detection Logic
     if (len(dns_dict[dns.id]) > 2):
         ans = ""
+        ans_dict = {}
         i = 0
         # Check for no. of response pkt to a request dns pkt
+        ans_list = []
         for s in dns_dict[dns.id]:
             if (s[0] == 'Ans'):
                 i += 1
                 ans += 'Ans' + str(i) + ": " + s[4] + ", "
+                new_dict = {}
+                new_dict['answers'] = ast.literal_eval(s[4])
+                new_dict['src'] = s[1]
+                new_dict['features'] = {}
+                ans_list.append(new_dict)
 
         if (i < 2):
             return
+
+        if duplicate_exists(ans_list):
+            return
+
+        new_dict = {}
+        new_dict['domain'] = dns.qd.qname.decode()
+        # new_dict["id"] = dns.id
+        new_dict["victim"] = ip.dst
+        # new_dict["src"] = ip.src
+        new_dict["response"] = ans_list
+
+        if not new_dict in output_list:
+            output_list.append(new_dict)
+
         # If greater than or equal to 2, Alert
-        print('DETECT: ID: %s Domain: %s Dst: %s:%s Src: %s:%s Answers: %s' \
-                % (str(dns.id) , dns.qd.qname.decode(), ip.dst, str(pkt[UDP].dport), \
-                ip.src, str(pkt[UDP].sport), ans))
+        # print('DETECT: ID: %s Domain: %s Dst: %s:%s Src: %s:%s Answers: %s' \
+                # % (str(dns.id) , dns.qd.qname.decode(), ip.dst, str(pkt[UDP].dport), \
+                # ip.src, str(pkt[UDP].sport), ans))
 
 
 # Main function
@@ -105,6 +141,7 @@ def main(filename):
     for pkt in packets:
         store_detect(pkt)
     # print(dns_dict)
+    return output_list
 
 # Script entry point
 if __name__ == "__main__":
@@ -116,3 +153,4 @@ if __name__ == "__main__":
     else:
         filename = os.path.join(script_dir, '../captures/sample.pcap')
     main(filename)
+    # print(output_list)

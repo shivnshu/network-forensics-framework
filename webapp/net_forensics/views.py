@@ -9,6 +9,7 @@ from .helper import protocol_hierarchy_analysis
 from .helper import arp_analysis
 from .helper import port_scanning_analysis
 from .helper import smtp_analysis
+from .helper import dns_analysis
 
 
 def index(request):
@@ -49,7 +50,9 @@ def dhcp(request):
 
 
 def dns(request):
-    return render(request, 'dns.html')
+    uploaded_file_url = request.GET.get('uploaded_file_url', '')
+    dns_detection_dicts = dns_analysis.main(uploaded_file_url.lstrip('/'))
+    return render(request, 'dns.html', {'dns_detection_dicts': dns_detection_dicts})
 
 def dos(request):
     return render(request, 'dos.html')

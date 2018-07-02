@@ -1,7 +1,39 @@
 {% extends 'base.html' %}
+{% load staticfiles %}
 
 {% block content %}
+{% if dns_detection_dicts %}
+{% for dns_detection_dict in dns_detection_dicts %}
 
-dns
+<div class="row dns-connection-info">
+    <div class="col-3">
+        <img src="{% static 'img/desktop.png' %}">
+    </div>
+    <div class="col-6" style="padding-top: 30px;">
+        <div class="dns-connection-line"></div>
+    </div>
+    <div class="col-3">
+        <img src="{% static 'img/server.png' %}">
+    </div>
+</div>
 
+<div class="row dns-connection-info">
+    <div class="col-3">
+        <p><b>Victim IP: </b>{{ dns_detection_dict.victim }}</p>
+    </div>
+    <div class="col-6">
+        {% for response in dns_detection_dict.response %}
+        <p><b>DNS Server IP: </b>{{ response.src }}</p>
+        <p><b>Response IPs: </b>{{ response.answers }}</p>
+        <p><b>Category: </b>Spoofed</p>
+        {% endfor %}
+    </div>
+    <div class="col-3">
+        <p><b>Domain: </b>{{ dns_detection_dict.domain }}</p>
+        <p><b>Attacker IP: </b></p>
+    </div>
+</div>
+
+{% endfor %}
+{% endif %}
 {% endblock %}

@@ -38,7 +38,7 @@ def analyse(request):
 def arp(request):
     uploaded_file_url = request.GET.get('uploaded_file_url', '')
     chart_dict_all = arp_analysis.main(uploaded_file_url.lstrip('/'))
-    return render(request, 'arp.html', {'chart_dict_all': chart_dict_all})
+    return render(request, 'arp.html', {'chart_dict_all': chart_dict_all["chart_data"], 'metadata': chart_dict_all["metadata"]})
 
 
 def darknet(request):

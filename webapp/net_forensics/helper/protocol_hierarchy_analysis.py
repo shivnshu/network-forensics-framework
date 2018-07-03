@@ -63,7 +63,7 @@ def main(capture_file):
         first_dict['label'] = first
         first_dict['color'] = protocol_color[first]
         first_dict['value'] = first_protocols[first]['count']
-        first_dict['tooltext'] = first + ", $$valueK, $percentValue"
+        first_dict['tooltext'] = first + ", $valueK, $percentValue"
         first_dict['category'] = []
 
         second_protocols = first_protocols[first]['proto']

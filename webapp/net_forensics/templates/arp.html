@@ -3,16 +3,23 @@
 {% if chart_dict_all %}
 
 {% block content %}
+{% if metadata %}
+{% for mdata in metadata %}
 
-<div id="arp-line-series" style="float: left;">FusionCharts XT will load here!</div>
+<div id="{{ mdata.target_ip }}" style="float: left;">FusionCharts XT will load here!</div>
 <div id="arp-attacker-info">
     <h4 style="font-weight: bold;">Attacker Information</h4>
-    <p><b>Attacker MAC Address:</b> asdcf</p>
-    <p><b>No. of spoofed packets: </b>asdfv</p>
-    <p><b>First spoofed pkt time:</b> asdf</p>
-    <p><b>Last spoofed pkt time:</b> asdf</p>
+    <p><b>Attacker MAC Address: </b>{{ mdata.attacker_mac }}</p>
+    <p><b>No. of spoofed packets: </b>{{ mdata.num_spoofed_pkts }}</p>
+    <p><b>First spoofed pkt time: </b>{{ mdata.first_spoofed_pkt_time }}</p>
+    <p><b>Last spoofed pkt time: </b>{{ mdata.last_spoofed_pkt_time }}</p>
+    <p><b>Victim IP Address: </b>{{ mdata.victim_ips }}</p>
+    <p><b>Attacker IP Address: </b>{{ mdata.attacker_ip }}</p>
+    <p><b>Target IP Address: </b>{{ mdata.target_ip }}</p>
 </div>
 
+{% endfor %}
+{% endif %}
 {% endblock %}
 
 {% block head-javascript %}
@@ -23,7 +30,7 @@
     FusionCharts.ready(function(){
     var fusioncharts = new FusionCharts({
     type: 'msline',
-    renderAt: 'arp-line-series',
+    renderAt: '{{ chart_dict.chart.subCaption }}',
     width: '40%',
     height: '600',
     dataFormat: 'json',

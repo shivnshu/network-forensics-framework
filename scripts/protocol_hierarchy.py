@@ -89,6 +89,8 @@ def check_add_layer_output(layers):
 
 
 def main(capture_file):
+    global output
+    output = {'count':0, 'proto': {}}
     # Add protocols to layers_all and populate tcp_service_map
     _script_location = os.path.dirname(os.path.abspath(__file__))
     r =  open(_script_location + "/data/protocols.yaml")

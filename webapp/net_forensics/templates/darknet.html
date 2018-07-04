@@ -24,6 +24,7 @@
 
     {{ block.super }}
 
+{% if packets_dist %}
     <script type="text/javascript">
     FusionCharts.ready(function(){
     var fusioncharts = new FusionCharts({
@@ -51,23 +52,15 @@
             "useDataPlotColorForLabels": "1",
             "theme": "fint"
         },
-        "data": [{
-            "label": "Scanning Traffic",
-            "value": "68.02"
-        }, {
-            "label": "Backscattering",
-            "value": "2"
-        }, {
-            "label": "Misconfiguration",
-            "value": "29.98"
-        }]
+        "data": {{ packets_dist|safe }}
     }
-}
-);
+    });
     fusioncharts.render();
     });
     </script>
+{% endif %}
 
+{% if protocols_dist %}
     <script type="text/javascript">
     FusionCharts.ready(function(){
     var fusioncharts = new FusionCharts({
@@ -95,26 +88,15 @@
             "useDataPlotColorForLabels": "1",
             "theme": "fint"
         },
-        "data": [{
-            "label": "TCP",
-            "value": "91.9"
-        }, {
-            "label": "UDP",
-            "value": "5.5"
-        }, {
-            "label": "ICMP",
-            "value": "2.9"
-        }, {
-            "label": "Others",
-            "value": "0.3"
-        }]
-    }
+        "data": {{ protocols_dist|safe }}
 }
-);
+});
     fusioncharts.render();
     });
     </script>
+{% endif %}
 
+{% if src_ip_class_dist %}
     <script type="text/javascript">
     FusionCharts.ready(function(){
     var fusioncharts = new FusionCharts({
@@ -142,23 +124,16 @@
             "useDataPlotColorForLabels": "1",
             "theme": "fint"
         },
-        "data": [{
-            "label": "Class A",
-            "value": "62.529"
-        }, {
-            "label": "Class B",
-            "value": "18.529"
-        }, {
-            "label": "Class C",
-            "value": "18.942"
-        }]
+        "data": {{ src_ip_class_dist|safe }}
     }
 }
 );
     fusioncharts.render();
     });
     </script>
+{% endif %}
 
+{% if dst_ip_class_dist %}
     <script type="text/javascript">
     FusionCharts.ready(function(){
     var fusioncharts = new FusionCharts({
@@ -186,24 +161,17 @@
             "useDataPlotColorForLabels": "1",
             "theme": "fint"
         },
-        "data": [{
-            "label": "Class A",
-            "value": "0.017"
-        }, {
-            "label": "Class B",
-            "value": "7.138"
-        }, {
-            "label": "Class C",
-            "value": "92.845"
-        }]
+        "data": {{ dst_ip_class_dist|safe }}
     }
 }
 );
     fusioncharts.render();
     });
     </script>
+{% endif %}
 
 <!--********************************************-->
+{% if tcp_targeted_ports %}
 <script type="text/javascript">
     FusionCharts.ready(function(){
     var fusioncharts = new FusionCharts({
@@ -235,61 +203,15 @@
             "subcaptionFontBold": "0",
             "subcaptionFontSize": "14"
         },
-        "data": [{
-                "label": "445",
-                "value": "420000"
-            },
-            {
-                "label": "80",
-                "value": "810000"
-            },
-            {
-                "label": "3389",
-                "value": "720000"
-            },
-            {
-                "label": "1433",
-                "value": "550000"
-            },
-            {
-                "label": "3072",
-                "value": "910000"
-            },
-            {
-                "label": "1024",
-                "value": "510000"
-            },
-            {
-                "label": "22",
-                "value": "680000"
-            },
-            {
-                "label": "8909",
-                "value": "620000"
-            },
-            {
-                "label": "139",
-                "value": "610000"
-            },
-            {
-                "label": "23",
-                "value": "490000"
-            },
-            {
-                "label": "6882",
-                "value": "900000"
-            },
-            {
-                "label": "135",
-                "value": "730000"
-            }
-        ]
+        "data": {{ tcp_targeted_ports|safe }}
     }
 });
     fusioncharts.render();
     });
 </script>
+{% endif %}
 
+{% if udp_targeted_ports %}
 <script type="text/javascript">
     FusionCharts.ready(function(){
     var fusioncharts = new FusionCharts({
@@ -321,59 +243,12 @@
             "subcaptionFontBold": "0",
             "subcaptionFontSize": "14"
         },
-        "data": [{
-                "label": "5060",
-                "value": "420000"
-            },
-            {
-                "label": "397",
-                "value": "810000"
-            },
-            {
-                "label": "1280",
-                "value": "720000"
-            },
-            {
-                "label": "1434",
-                "value": "550000"
-            },
-            {
-                "label": "53",
-                "value": "910000"
-            },
-            {
-                "label": "1863",
-                "value": "510000"
-            },
-            {
-                "label": "6257",
-                "value": "680000"
-            },
-            {
-                "label": "137",
-                "value": "620000"
-            },
-            {
-                "label": "39455",
-                "value": "610000"
-            },
-            {
-                "label": "4647",
-                "value": "490000"
-            },
-            {
-                "label": "30247",
-                "value": "900000"
-            },
-            {
-                "label": "64055",
-                "value": "730000"
-            }
-        ]
-    }
-});
+        "data": {{ udp_targeted_ports|safe }}
+        }
+    });
     fusioncharts.render();
     });
 </script>
+{% endif %}
 
 {% endblock %}

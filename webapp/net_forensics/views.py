@@ -10,6 +10,7 @@ from .helper import arp_analysis
 from .helper import port_scanning_analysis
 from .helper import smtp_analysis
 from .helper import dns_analysis
+from .helper import darknet_analysis
 
 
 def index(request):
@@ -42,7 +43,14 @@ def arp(request):
 
 
 def darknet(request):
-    return render(request, 'darknet.html')
+    uploaded_file_url = request.GET.get('uploaded_file_url', '')
+    chart_dict_all = darknet_analysis.main(uploaded_file_url.lstrip('/'))
+    return render(request, 'darknet.html', {"packets_dist": chart_dict_all["packets_dist"],
+        "protocols_dist": chart_dict_all["protocols_dist"],
+        "src_ip_class_dist": chart_dict_all["src_ip_class_dist"],
+        "dst_ip_class_dist": chart_dict_all["dst_ip_class_dist"],
+        "tcp_targeted_ports": chart_dict_all["tcp_targeted_ports"],
+        "udp_targeted_ports":chart_dict_all["udp_targeted_ports"]})
 
 
 def dhcp(request):

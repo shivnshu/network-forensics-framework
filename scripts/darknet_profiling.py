@@ -61,8 +61,12 @@ def darknet_pkt(pkt, darknet_ips):
     return (pkt[IP].src in darknet_ips) or (pkt[IP].dst in darknet_ips)
 
 # Main function
-def main(capture_file, darknet_file):
+def main(capture_file):
     global profiling_dict
+    # Get script directory absolute path
+    script_dir = os.path.dirname(os.path.abspath(__file__)) + "/"
+    # Darknet list absolute path
+    darknet_file = os.path.join(script_dir, "darknet.list")
     # Create and store the list of darknet IPs from the file
     darknet_ips = open(darknet_file, "r").read().splitlines()
     # print(darknet_ips)
@@ -125,6 +129,8 @@ def main(capture_file, darknet_file):
         elif dst_ip in classC:
             profiling_dict["ClassC dst"] += 1
 
+    return profiling_dict
+
 
 # Script entry point
 if __name__ == "__main__":
@@ -136,9 +142,7 @@ if __name__ == "__main__":
     else:
         # Default capture file
         capture_file = os.path.join(script_dir, "../captures/sample.pcap")
-    # Darknet list absolute path
-    darknet_file = os.path.join(script_dir, "darknet.list")
     # Main functionality
-    main(capture_file, darknet_file)
+    main(capture_file)
     # print for DEBUG
     print(profiling_dict)

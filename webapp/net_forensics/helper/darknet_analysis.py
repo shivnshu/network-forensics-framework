@@ -44,14 +44,14 @@ def main(capture_file):
     tcp_targeted_ports = []
     tmp_dict = dict(Counter(profiling_dict["TCP targeted ports"]))
     for elem in tmp_dict:
-        tcp_targeted_ports.append({"label": elem, "value": tmp_dict[elem]})
+        tcp_targeted_ports.append({"label": str(elem), "value": tmp_dict[elem]})
     chart_data_dict["tcp_targeted_ports"] = tcp_targeted_ports
 
     # UDP targeted ports
     udp_targeted_ports = []
     tmp_dict = dict(Counter(profiling_dict["UDP targeted ports"]))
     for elem in tmp_dict:
-        udp_targeted_ports.append({"label": elem, "value": tmp_dict[elem]})
+        udp_targeted_ports.append({"label": str(elem), "value": tmp_dict[elem]})
     chart_data_dict["udp_targeted_ports"] = udp_targeted_ports
 
     return chart_data_dict

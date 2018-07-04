@@ -72,10 +72,10 @@ def port_scanning(request):
     return render(request, 'port_scanning.html', {'port_scanning_dicts': port_scanning_dicts})
 
 
-def smtp(request):
+def sessions(request):
     uploaded_file_url = request.GET.get('uploaded_file_url', '')
     smtp_dissections = smtp_analysis.main(uploaded_file_url.lstrip('/'))
-    return render(request, 'smtp.html', {'smtp_dissections': smtp_dissections})
+    return render(request, 'sessions.html', {'sessions_info': smtp_dissections})
 
 def about(request):
     return render(request, 'about.html')

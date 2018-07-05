@@ -3,6 +3,7 @@ from sklearn.neural_network import MLPClassifier
 from scapy.all import *
 import os
 import sys
+import pickle
 import random
 
 # Function to create dataset from the files
@@ -63,6 +64,10 @@ def main(train_dataset_location, test_dataset_location):
     # Test accuracy and print it
     test_accuracy(clf, test_dataset_location)
 
+    # Save model
+    filename = "data/dns_classifier.model"
+    pickle.dump(clf, open(filename, 'wb'))
+
 
 # Script entry point
 if __name__ == "__main__":
@@ -74,6 +79,6 @@ if __name__ == "__main__":
     else:
         # Default dataset location
         dataset_location = os.path.join(script_dir, '../dataset')
-
+    
     # For now, test on same dataset
     main(dataset_location, dataset_location)

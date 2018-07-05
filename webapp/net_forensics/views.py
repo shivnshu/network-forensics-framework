@@ -11,6 +11,7 @@ from .helper import port_scanning_analysis
 from .helper import smtp_analysis
 from .helper import dns_analysis
 from .helper import darknet_analysis
+from .helper import sessions_analysis
 
 
 def index(request):
@@ -74,8 +75,8 @@ def port_scanning(request):
 
 def sessions(request):
     uploaded_file_url = request.GET.get('uploaded_file_url', '')
-    smtp_dissections = smtp_analysis.main(uploaded_file_url.lstrip('/'))
-    return render(request, 'sessions.html', {'sessions_info': smtp_dissections})
+    sessions_info = sessions_analysis.main(uploaded_file_url.lstrip('/'))
+    return render(request, 'sessions.html', {'sessions_info': sessions_info})
 
 def about(request):
     return render(request, 'about.html')

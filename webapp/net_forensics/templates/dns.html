@@ -25,12 +25,12 @@
         {% for response in dns_detection_dict.response %}
         <p><b>DNS Server IP: </b>{{ response.src }}</p>
         <p><b>Response IPs: </b>{{ response.answers }}</p>
-        <p><b>Category: </b>Spoofed</p>
+        <p><b>Category: </b>{{ response.prediction }}</p>
         {% endfor %}
     </div>
     <div class="col-3">
         <p><b>Domain: </b>{{ dns_detection_dict.domain }}</p>
-        <p><b>Attacker IP: </b></p>
+        <p><b>Attacker IP: </b>{{ dns_detection_dict.attacker_ip }}</p>
         <p><b>Attack Timings: </b>{{ dns_detection_dict.timestamps }}</p>
     </div>
 </div>

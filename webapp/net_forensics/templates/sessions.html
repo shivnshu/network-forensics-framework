@@ -1,7 +1,35 @@
 {% extends 'base.html' %}
+{% load staticfiles %}
 
 {% block content %}
+{% if sessions_info %}
+{% for session_info in sessions_info %}
 
-{{ sessions_info }}
+<div class="row sessions-info">
+     <div class="col-3">
+         <img src="{% static 'img/desktop.png' %}">
+     </div>
+     <div class="col-6" style="padding-top: 30px;">
+         <div class="sessions-line"></div>
+     </div>
+     <div class="col-3" >
+         <img src="{% static 'img/desktop.png' %}">
+     </div>
+</div>
 
+<div class="row sessions-info">
+    <div class="col-3">
+        <p><b>Source IP: </b>{{ session_info.src }}</p>
+    </div>
+    <div class="col-6">
+        <p><b>Protocol: </b>{{ session_info.proto }}</p>
+        <p><b>Info: </b>{{ session_info.data }} </p>
+    </div>
+    <div class="col-3">
+        <p><b>Destination IP: </b>{{ session_info.dst }}</p>
+    </div>
+</div>
+
+{% endfor %}
+{% endif %}
 {% endblock %}

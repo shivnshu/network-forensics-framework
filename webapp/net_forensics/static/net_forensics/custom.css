@@ -42,6 +42,7 @@
     margin: 0;
     padding: 0;
 }
+
 .dns-connection-line {
     width: 100%;
     height: 0%;
@@ -53,6 +54,21 @@
 }
 
 .dns-connection-info div p {
+    margin: 0;
+    padding: 0;
+}
+
+.sessions-line {
+    width: 100%;
+    height: 0%;
+    border-bottom: 1px solid black;
+}
+
+.sessions-info div {
+    text-align: center;
+}
+
+.sessions-info div p {
     margin: 0;
     padding: 0;
 }

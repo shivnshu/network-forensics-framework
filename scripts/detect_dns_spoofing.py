@@ -93,7 +93,8 @@ def store_detect(pkt):
                 l = l.payload
             # ans = ans[:len(ans)-1]
 
-        t = ('Ans', ip.src, ip.dst, dns.qd.qname, str(ans))
+        t = ('Ans', ip.src, ip.dst, dns.qd.qname, str(ans), dns.ancount,
+                dns.nscount, dns.arcount)
         dns_dict[dns.id].add(t)
 
     # Spoofing Detection Logic
@@ -110,7 +111,10 @@ def store_detect(pkt):
                 new_dict = {}
                 new_dict['answers'] = ast.literal_eval(s[4])
                 new_dict['src'] = s[1]
-                new_dict['features'] = {}
+                new_dict['feature_vector'] = {}
+                new_dict['feature_vector']['ancount'] = s[5]
+                new_dict['feature_vector']['nscount'] = s[6]
+                new_dict['feature_vector']['arcount'] = s[7]
                 ans_list.append(new_dict)
 
         if (i < 2):
@@ -162,7 +166,7 @@ if __name__ == "__main__":
         filename = sys.argv[1]
     else:
         filename = os.path.join(script_dir, '../captures/sample.pcap')
-    main(filename)
+    # print(main(filename))
     # print(output_list)
     # print(len(output_list))
     # print()

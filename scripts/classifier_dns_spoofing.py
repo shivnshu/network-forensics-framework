@@ -71,8 +71,8 @@ def main(train_dataset_location, test_dataset_location):
     test_accuracy(clf, test_dataset_location)
 
     # Save model
-    filename = "data/dns_classifier.model"
-    pickle.dump(clf, open(filename, 'wb'))
+    # filename = "data/dns_classifier.model"
+    # pickle.dump(clf, open(filename, 'wb'))
 
 
 # Script entry point

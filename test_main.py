@@ -12,7 +12,7 @@ def test_classifier_dns_spoofing():
     scripts.classifier_dns_spoofing.main('dataset', 'dataset')
 
 def test_darknet_profiling():
-    scripts.darknet_profiling.main('captures/sample.pcap', 'scripts/darknet.list')
+    scripts.darknet_profiling.main('captures/sample.pcap')
 
 def test_detect_arp_spoofing():
     pass

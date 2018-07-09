@@ -1,5 +1,7 @@
 #!/usr/bin/env python3
-from sklearn.neural_network import MLPClassifier
+# from sklearn.neural_network import MLPClassifier
+# from sklearn import linear_model
+from sklearn.svm import SVC
 from scapy.all import *
 import os
 import sys
@@ -41,10 +43,12 @@ def create_dataset(dataset_location):
 # Function to test accuracy of learnt model
 def test_accuracy(model, dataset_location):
     test_packets, actual_labels = create_dataset(dataset_location)
-    predicted_labels = model.predict(test_packets)
+    predicted_labels = model.predict_proba(test_packets)
     c = 0
     for i in range(len(predicted_labels)):
-        if (predicted_labels[i] == actual_labels[i]):
+        # print(predicted_labels[i][1], actual_labels[i])
+        predict = 1 if predicted_labels[i][1] > 0.5 else 0
+        if (predict == actual_labels[i]):
             c += 1
     print('Accuracy:', c*100/len(predicted_labels))
 
@@ -56,8 +60,10 @@ def main(train_dataset_location, test_dataset_location):
     # print(packets)
     # print(labels)
     # Define a Multi-layer Neuron based classifier
-    clf = MLPClassifier(solver='lbfgs', alpha=1e-5, \
-            hidden_layer_sizes=(5,), random_state=1)
+    # clf = MLPClassifier(solver='lbfgs', alpha=1e-5, \
+            # hidden_layer_sizes=(5,), random_state=1)
+    # clf = linear_model.LogisticRegression()
+    clf = SVC(probability=True)
     # Train the model using the created dataset
     clf.fit(packets, labels)
 

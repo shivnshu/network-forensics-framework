@@ -27,17 +27,28 @@ def main(capture_file):
     for domain in dns_detect_list:
         domain["timestamps"] = pretty_timestamp(domain["timestamps"])
         domain["attacker_ip"] = ""
+        spoof_pkt_highest_proba = 0
         for response in domain['response']:
             features = response['feature_vector']
             feature_vector = [features['ancount'], features['nscount'],
                                 features['arcount']]
             # print(feature_vector)
-            prediction = loaded_model.predict([feature_vector])
+            prediction = loaded_model.predict_proba([feature_vector])[0]
             # print(prediction)
             del response['feature_vector']
-            response['prediction'] = "Spoof" if prediction else "Genuine"
-            if prediction:
+            # response['prediction'] = "Spoof" if prediction else "Genuine"
+            response["prediction"] = prediction[1]
+            if spoof_pkt_highest_proba < prediction[1]:
                 domain["attacker_ip"] = response['answers'][0]
+                spoof_pkt_highest_proba = prediction[1]
+
+        spoof_pkt_tag_attached = False
+        for response in domain["response"]:
+            if not spoof_pkt_tag_attached and response['prediction'] == spoof_pkt_highest_proba:
+                response['prediction'] = "Spoof"
+                spoof_pkt_tag_attached = True
+            else:
+                response['prediction'] = 'Genuine'
 
     return dns_detect_list
 

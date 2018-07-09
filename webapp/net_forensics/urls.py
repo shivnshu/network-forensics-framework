@@ -13,7 +13,9 @@ urlpatterns = [
     url(r'^dns', views.dns, name="dns"),
     url(r'^dos', views.dos, name="dos"),
     url(r'^port_scanning', views.port_scanning, name="port_scanning"),
-    url(r'^sessions', views.sessions, name="sessions")
+    url(r'^sessions', views.sessions, name="sessions"),
+    url(r'^smtp', views.smtp, name="smtp")
+
 ]
 
 urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

@@ -3,6 +3,18 @@ import sys, os, time
 sys.path.append(os.path.join(os.path.dirname(__file__), '..', 'scripts'))
 import detect_arp_spoofing
 
+def pretty_time(seconds):
+    local_time = time.localtime(seconds)
+    year = local_time.tm_year
+    month = local_time.tm_mon
+    day = local_time.tm_mday
+    hour = local_time.tm_hour
+    minute = local_time.tm_min
+    second = local_time.tm_sec
+    time_str = str(hour)+":"+str(minute)+":"+str(second)+" "+str(month)\
+            +"/"+str(day)+"/"+str(year)
+    return time_str
+
 def main(capture_file):
     ip_mac_dict, mac_ip_dict = detect_arp_spoofing.main(capture_file)
 
@@ -78,6 +90,7 @@ def main(capture_file):
             "showalternatehgridcolor": "0",
             "divlinecolor": "CCCCCC",
             "showvalues": "0",
+            "showLabels": "0",
             "showcanvasborder": "0",
             "canvasborderalpha": "0",
             "canvasbordercolor": "CCCCCC",
@@ -110,8 +123,8 @@ def main(capture_file):
         chart_dict_all["chart_data"].append(chart_dict)
         new_dict = {"target_ip": ip, "attacker_mac": attacker_mac,
                 "num_spoofed_pkts": num_spoofed_pkts,
-                "first_spoofed_pkt_time": first_spoofed_pkt_time,
-                "last_spoofed_pkt_time": last_spoofed_pkt_time,
+                "first_spoofed_pkt_time": pretty_time(first_spoofed_pkt_time),
+                "last_spoofed_pkt_time": pretty_time(last_spoofed_pkt_time),
                 "victim_ips": ip_mac_dict[ip][attacker_mac]["victim_ips"],
                 "attacker_ip": attacker_ip}
         chart_dict_all["metadata"].append(new_dict)

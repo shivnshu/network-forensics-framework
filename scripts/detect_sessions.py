@@ -15,7 +15,8 @@ def main(capture_file):
         this_session["src"] = summary[1]
         this_session["dst"] = summary[3]
         this_session["data"] = sessions[session]
-        sessions_info.append(this_session)
+        if this_session["proto"] == "TCP":
+            sessions_info.append(this_session)
 
     return sessions_info
 

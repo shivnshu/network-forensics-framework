@@ -63,15 +63,15 @@ def main(pcap_file):
         assert(len(ips) == 2)
         new_smtp_dissection_dict = {}
         title = "Found Email conversation between " + ips[0] + " and " + ips[1]
-        print(title)
+        # print(title)
         new_smtp_dissection_dict['title'] = title
         new_smtp_dissection_dict['content'] = []
-        print()
+        # print()
         for pkt in sessions[session]:
             try:
                 # Print decoded string of TCP payload of each pkt
                 content = pkt[TCP][Raw].load.decode()
-                print(content)
+                # print(content)
                 new_smtp_dissection_dict['content'].append(content)
             except:
                 pass

@@ -1,0 +1,10 @@
+{% extends 'base.html' %}
+{% load staticfiles %}
+
+{% block content %}
+{% if smtp_dissections %}
+
+{{ smtp_dissections }}
+
+{% endif %}
+{% endblock %}

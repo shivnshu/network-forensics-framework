@@ -72,3 +72,9 @@
     margin: 0;
     padding: 0;
 }
+
+.scrollmenu {
+    overflow-x: auto;
+    width: 30em;
+    white-space: nowrap;
+}

@@ -8,10 +8,10 @@ from django.core.files.storage import FileSystemStorage
 from .helper import protocol_hierarchy_analysis
 from .helper import arp_analysis
 from .helper import port_scanning_analysis
-from .helper import smtp_analysis
 from .helper import dns_analysis
 from .helper import darknet_analysis
 from .helper import sessions_analysis
+from .helper import smtp_analysis
 
 
 def index(request):
@@ -77,6 +77,11 @@ def sessions(request):
     uploaded_file_url = request.GET.get('uploaded_file_url', '')
     sessions_info = sessions_analysis.main(uploaded_file_url.lstrip('/'))
     return render(request, 'sessions.html', {'sessions_info': sessions_info})
+
+def smtp(request):
+    uploaded_file_url = request.GET.get('uploaded_file_url', '')
+    smtp_dissections = smtp_analysis.main(uploaded_file_url.lstrip('/'))
+    return render(request, 'smtp.html', {'smtp_dissections': smtp_dissections})
 
 def about(request):
     return render(request, 'about.html')

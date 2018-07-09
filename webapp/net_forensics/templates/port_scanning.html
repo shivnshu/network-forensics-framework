@@ -27,7 +27,10 @@
         <p><b>Category: </b>{{ port_scanning_dict.category }}</p>
         <p><b>Scan start time: </b>{{ port_scanning_dict.start_time }}</p>
         <p><b>Scan end time: </b>{{ port_scanning_dict.end_time }}</p>
-        {{ port_scanning_dict.scanned_ports }}
+        <p><b>Ports</b></p>
+        <div class="scrollmenu">
+            {{ port_scanning_dict.scanned_ports }}
+        </div>
     </div>
     <div class="col-3">
         <p><b>Victim IP: </b>{{ port_scanning_dict.victim_ip }}</p>

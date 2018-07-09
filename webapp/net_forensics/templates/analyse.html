@@ -16,6 +16,10 @@
 
 </div>
 
+<div>
+    <div id="protocols-time-series-div"></div>
+</div>
+
 
 <div style="text-align: center; clear: both;">
 <h4 style="font-weight: bold; margin-top:3%;">Advanced Analysis</h4>
@@ -44,7 +48,6 @@
             //alert(this.value);
             location.href = this.value + '.html?uploaded_file_url={{ uploaded_file_url }}';
         }
-     
         var btnsAnalyse = document.getElementsByClassName("btn-analyse");
         for (var i = 0; i < btnsAnalyse.length; i++) {
             btnsAnalyse[i].addEventListener('click', advAnalysis, false);
@@ -55,7 +58,6 @@
             var fusioncharts = new FusionCharts({
                 type: 'multilevelpie',
                 renderAt: 'protocols-hierarchy-container',
-    
                 width: '500',
                 height: '500',
                 dataFormat: 'json',
@@ -78,6 +80,20 @@
     .render();
 	});
 
+    </script>
+
+    <script type="text/javascript">
+        FusionCharts.ready(function(){
+            var fusioncharts = new FusionCharts({
+            type: 'msline',
+            renderAt: 'protocols-time-series-div',
+            width: '100%',
+            height: '600',
+            dataFormat: 'json',
+            dataSource: {{ protocols_time_series_data|safe }}
+        });
+    fusioncharts.render();
+    });
     </script>
 
 {% endblock %}

@@ -6,6 +6,7 @@ from django.http import HttpResponse
 from django.core.files.storage import FileSystemStorage
 
 from .helper import protocol_hierarchy_analysis
+from .helper import protocols_time_series_analysis
 from .helper import arp_analysis
 from .helper import port_scanning_analysis
 from .helper import dns_analysis
@@ -30,11 +31,13 @@ def analyse(request):
     uploaded_file_url = fs.url(filename)
     chart_dict = protocol_hierarchy_analysis.main(uploaded_file_url.lstrip('/'))
     protocol_stats_data_source = protocol_hierarchy_analysis.chart_dict_to_stats(chart_dict)
+    protocols_time_series_dict = protocols_time_series_analysis.main(uploaded_file_url.lstrip('/'))
     return render(request, 'analyse.html', \
             {'uploaded_file_url': uploaded_file_url, \
              'uploaded_file_name': myfile.name, \
               'protocols_analysis_data_source': json.dumps(chart_dict), \
-              'protocol_stats_data_source': json.dumps(protocol_stats_data_source)})
+              'protocol_stats_data_source': json.dumps(protocol_stats_data_source), \
+             'protocols_time_series_data': json.dumps(protocols_time_series_dict)})
 
 
 def arp(request):

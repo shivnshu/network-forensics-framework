@@ -12,7 +12,7 @@ def main(capture_file):
     packets = rdpcap(capture_file)
     k, r = 0, 0
     for pkt in packets:
-        if TCP in pkt:
+        if TCP in pkt and IP in pkt:
             r = r + 1
             sip = pkt[IP].src
             dip = pkt[IP].dst

@@ -71,12 +71,14 @@ def dns(request):
 def dos(request):
     uploaded_file_url = request.GET.get('uploaded_file_url', '')
     dos_detection_dicts = dos_analysis.main(uploaded_file_url.lstrip('/'))
-    ping_attack_list = dos_detection_dicts["ping"]
-    land_attack_list = dos_detection_dicts["land"]
-    mail_attack_list = dos_detection_dicts["mail"]
-    return render(request, 'dos.html', {'ping_attack_list': ping_attack_list, 
-        'land_attack_list': land_attack_list,
-        'mail_attack_list': mail_attack_list})
+    information_dict = {}
+    if len(dos_detection_dicts['ping']) > 0:
+        information_dict["ping_attack_list"] = dos_detection_dicts['ping']
+    if len(dos_detection_dicts['land']) > 0:
+        information_dict["land_attack_list"] = dos_detection_dicts['land']
+    if len(dos_detection_dicts['mail']) > 0:
+        information_dict["mail_attack_list"] = dos_detection_dicts['mail']
+    return render(request, 'dos.html', information_dict)
 
 
 def port_scanning(request):

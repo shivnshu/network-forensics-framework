@@ -7,71 +7,56 @@
 <h4>Ping Attack Detection</h4>
 
 {% for ping_attack_info in ping_attack_list %}
-<div class="row dns-connection-info">
+<div class="row dos-connection-info">
     <div class="col-3">
         <img src="{% static 'img/desktop.png' %}">
     </div>
     <div class="col-6" style="padding-top: 30px;">
-        <div class="dns-connection-line"></div>
+        <div class="dos-connection-line"></div>
     </div>
     <div class="col-3">
-        <img src="{% static 'img/server.png' %}">
+        <img src="{% static 'img/desktop.png' %}">
     </div>
 </div>
-<div class="row dns-connection-info">
+<div class="row dos-connection-info">
     <div class="col-3">
-        <p><b>Victim IP: </b>{{ dns_detection_dict.victim }}</p>
+        <p><b>Victim IP: </b></p>
     </div>
     <div class="col-6">
-        {% for response in dns_detection_dict.response %}
-        <p><b>DNS Server IP: </b>{{ response.src }}</p>
-        <p><b>Response IPs: </b>{{ response.answers }}</p>
-        <p><b>Category: </b>{{ response.prediction }}</p>
-        <hr>
-        {% endfor %}
     </div>
     <div class="col-3">
-        <p><b>Domain: </b>{{ dns_detection_dict.domain }}</p>
-        <p><b>Attacker IP: </b>{{ dns_detection_dict.attacker_ip }}</p>
-        <p><b>Attack Timings: </b>{{ dns_detection_dict.timestamps }}</p>
+        <p><b>Attacker IP: </b></p>
     </div>
 </div>
 {% endfor %}
 
 {% endif %}
 
+
 {% if land_attack_list %}
 <h4>Land Attack Detection</h4>
 
 {% for land_attack_info in land_attack_list %}
-<div class="row dns-connection-info">
+<div class="row dos-connection-info">
     <div class="col-3">
         <img src="{% static 'img/desktop.png' %}">
     </div>
     <div class="col-6" style="padding-top: 30px;">
-        <div class="dns-connection-line"></div>
+        <div class="dos-connection-line"></div>
     </div>
     <div class="col-3">
-        <img src="{% static 'img/server.png' %}">
+        <img src="{% static 'img/desktop.png' %}">
     </div>
 </div>
 
-<div class="row dns-connection-info">
+<div class="row dos-connection-info">
     <div class="col-3">
-        <p><b>Victim IP: </b>{{ dns_detection_dict.victim }}</p>
+        <p><b>Victim IP: </b></p>
     </div>
     <div class="col-6">
-        {% for response in dns_detection_dict.response %}
-        <p><b>DNS Server IP: </b>{{ response.src }}</p>
-        <p><b>Response IPs: </b>{{ response.answers }}</p>
-        <p><b>Category: </b>{{ response.prediction }}</p>
-        <hr>
-        {% endfor %}
     </div>
     <div class="col-3">
-        <p><b>Domain: </b>{{ dns_detection_dict.domain }}</p>
-        <p><b>Attacker IP: </b>{{ dns_detection_dict.attacker_ip }}</p>
-        <p><b>Attack Timings: </b>{{ dns_detection_dict.timestamps }}</p>
+        <p><b>Attacker IP: </b></p>
     </div>
 </div>
 
@@ -83,34 +68,26 @@
 <h4>Mail Attack Detection</h4>
 
 {% for mail_attack_info in mail_attack_list %}
-<div class="row dns-connection-info">
+<div class="row dos-connection-info">
     <div class="col-3">
         <img src="{% static 'img/desktop.png' %}">
     </div>
     <div class="col-6" style="padding-top: 30px;">
-        <div class="dns-connection-line"></div>
+        <div class="dos-connection-line"></div>
     </div>
     <div class="col-3">
-        <img src="{% static 'img/server.png' %}">
+        <img src="{% static 'img/desktop.png' %}">
     </div>
 </div>
 
-<div class="row dns-connection-info">
+<div class="row dos-connection-info">
     <div class="col-3">
-        <p><b>Victim IP: </b>{{ dns_detection_dict.victim }}</p>
+        <p><b>Victim IP: </b></p>
     </div>
     <div class="col-6">
-        {% for response in dns_detection_dict.response %}
-        <p><b>DNS Server IP: </b>{{ response.src }}</p>
-        <p><b>Response IPs: </b>{{ response.answers }}</p>
-        <p><b>Category: </b>{{ response.prediction }}</p>
-        <hr>
-        {% endfor %}
     </div>
     <div class="col-3">
-        <p><b>Domain: </b>{{ dns_detection_dict.domain }}</p>
-        <p><b>Attacker IP: </b>{{ dns_detection_dict.attacker_ip }}</p>
-        <p><b>Attack Timings: </b>{{ dns_detection_dict.timestamps }}</p>
+        <p><b>Attacker IP: </b></p>
     </div>
 </div>
 {% endfor %}

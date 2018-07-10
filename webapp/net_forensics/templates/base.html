@@ -34,7 +34,12 @@
     <div class="container-fullwidth">
         <!-- Image and text -->
         <nav class="navbar navbar-dark bg-dark" id="navbar_whole">
-            <a class="navbar-brand" href="{%url 'index' %}">
+            {% if uploaded_file_url %}
+            <button onclick="openNav()" class="navbar-toggler" type="button" data-toggle="collapse" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            {% endif %}
+            <a class="navbar-brand navbar-right" href="{%url 'index' %}">
                 Network Forensics Framework
             </a>
             <a class="navbar-brand navbar-right" href="/about.html">
@@ -44,20 +49,33 @@
     </div>
 </header>
 
-    <!-- This is where you'll put your page content. Leave it blank for now. -->
-    <div class="container" style="padding-top: 70px;">
+{% if uploaded_file_url %}
+<div id="mySidenav" class="sidenav">
+  <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>
+  <a href="arp.html?uploaded_file_url={{ uploaded_file_url }}" class="btn-analyse">ARP Analysis</a>
+  <a href="darknet.html?uploaded_file_url={{ uploaded_file_url }}" class="btn-analyse">Darknet Analysis</a>
+  <a href="dhcp.html?uploaded_file_url={{ uploaded_file_url }}" class="btn-analyse">DHCP Analysis</a>
+  <a href="dns.html?uploaded_file_url={{ uploaded_file_url }}" class="btn-analyse" value="dns">DNS Analysis</a>
+  <a href="dos.html?uploaded_file_url={{ uploaded_file_url }}" class="btn-analyse" value="dos">DoS Analysis</a>
+  <a href="port_scanning.html?uploaded_file_url={{ uploaded_file_url }}" class="btn-analysis">Port Scanning Analysis</a>
+  <a href="smtp.html?uploaded_file_url={{ uploaded_file_url }}" class="btn-analysis">SMTP Analysis</a>
+</div>
+{% endif %}
+
+    <div id="container_id" class="container" style="padding-top: 50px;">
         {% block content %}Nothing Here{% endblock %}
     </div>
 
     <!-- This is where the footer begins -->
     <footer>
     </footer>
+
     {% block head-javascript %}
         <script src="{% static 'jquery/jquery-3.3.1.min.js' %}"></script>
-		<script src="{% static 'bootstrap/js/bootstrap.min.js' %}"></script>
+        <script src="{% static 'bootstrap/js/bootstrap.min.js' %}"></script>
         <script type="text/javascript" src="{% static 'fusioncharts/js/fusioncharts.js' %}"></script>
         <script type="text/javascript" src="{% static 'fusioncharts/js/themes/fusioncharts.theme.fint.js' %}"></script>
-		<script src="{% static 'net_forensics/custom.js' %}"></script>
-	{% endblock %}
+        <script src="{% static 'net_forensics/custom.js' %}"></script>
+    {% endblock %}
 
 </html>

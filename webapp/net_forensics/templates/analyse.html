@@ -2,12 +2,12 @@
 
 {% block content %}
 
-<div class="alert alert-success" style="text-align: center;">
-    <h3 style="font-weight: bolder;"> Analysis of <a style="color: inherit;" href="{{ uploaded_file_url }}">{{ uploaded_file_name }}</a> </h3>
-</div>
+ <div style="text-align: center;"> 
+ <h3 style="font-weight: bolder;">C3I Center, IIT Kanpur</h3> 
+ </div> 
 
 
-<h4 style="font-weight: bold; margin-top:3%;">Protocol Hierarchy Analysis</h4>
+<!-- <h4 style="font-weight: bold; margin-top:3%;">Protocol Hierarchy Analysis</h4> -->
 
 <div>
 
@@ -21,20 +21,20 @@
 </div>
 
 
-<div style="text-align: center; clear: both;">
-<h4 style="font-weight: bold; margin-top:3%;">Advanced Analysis</h4>
+<!--<div style="position: absolute; top: 0; right: 0;">-->
+<!--<h4 style="font-weight: bold; margin-top:3%;">Advanced Analysis</h4>-->
 
-    <button type="button" class="btn btn-secondary btn-lg btn-info btn-analyse" value="arp">ARP Analysis</button>
-    <button type="button" class="btn btn-secondary btn-lg btn-info btn-analyse" value="darknet">Darknet Analysis</button>
-    <button type="button" class="btn btn-secondary btn-lg btn-info btn-analyse" value="dhcp">DHCP Analysis</button>
-    <button type="button" class="btn btn-secondary btn-lg btn-info btn-analyse" value="dns">DNS Analysis</button>
-    <button type="button" class="btn btn-secondary btn-lg btn-info btn-analyse" value="dos">DoS Analysis</button>
-    <button type="button" class="btn btn-secondary btn-lg btn-info btn-analyse" value="port_scanning">Port Scanning Analysis</button>
-    <button type="button" class="btn btn-secondary btn-lg btn-info btn-analyse" value="sessions">Sessions Analysis</button>
-    <button type="button" class="btn btn-secondary btn-lg btn-info btn-analyse" value="smtp">SMTP Analysis</button>
+    <!--<button type="button" class="btn btn-secondary btn-lg btn-info btn-analyse" value="arp">ARP Analysis</button>-->
+    <!--<button type="button" class="btn btn-secondary btn-lg btn-info btn-analyse" value="darknet">Darknet Analysis</button>-->
+    <!--<button type="button" class="btn btn-secondary btn-lg btn-info btn-analyse" value="dhcp">DHCP Analysis</button>-->
+    <!--<button type="button" class="btn btn-secondary btn-lg btn-info btn-analyse" value="dns">DNS Analysis</button>-->
+    <!--<button type="button" class="btn btn-secondary btn-lg btn-info btn-analyse" value="dos">DoS Analysis</button>-->
+    <!--<button type="button" class="btn btn-secondary btn-lg btn-info btn-analyse" value="port_scanning">Port Scanning Analysis</button>-->
+    <!--<button type="button" class="btn btn-secondary btn-lg btn-info btn-analyse" value="sessions">Sessions Analysis</button>-->
+    <!--<button type="button" class="btn btn-secondary btn-lg btn-info btn-analyse" value="smtp">SMTP Analysis</button>-->
 
 
-</div>
+<!--</div>-->
 
 {% endblock %}
 
@@ -44,22 +44,12 @@
     {{ block.super }}
 
     <script type="text/javascript">
-        var advAnalysis = function() {
-            //alert(this.value);
-            location.href = this.value + '.html?uploaded_file_url={{ uploaded_file_url }}';
-        }
-        var btnsAnalyse = document.getElementsByClassName("btn-analyse");
-        for (var i = 0; i < btnsAnalyse.length; i++) {
-            btnsAnalyse[i].addEventListener('click', advAnalysis, false);
-        }
-
-
         FusionCharts.ready(function(){
             var fusioncharts = new FusionCharts({
                 type: 'multilevelpie',
                 renderAt: 'protocols-hierarchy-container',
-                width: '500',
-                height: '500',
+                width: '400',
+                height: '400',
                 dataFormat: 'json',
                 dataSource: {{ protocols_analysis_data_source|safe }}
             });
@@ -67,19 +57,19 @@
         });
 
     </script>
-    <script type="text/javascript">
-		FusionCharts.ready(function () {
-		var topStores = new FusionCharts({
-			type: 'bar2D',
-			renderAt: 'protocols-distribution',
-			width: '600',
-			height: '500',
-			dataFormat: 'json',
-			dataSource: {{ protocol_stats_data_source|safe }}
-    })
-    .render();
-	});
 
+    <script type="text/javascript">
+        FusionCharts.ready(function () {
+            var topStores = new FusionCharts({
+                type: 'bar2D',
+                renderAt: 'protocols-distribution',
+                width: '700',
+                height: '400',
+                dataFormat: 'json',
+                dataSource: {{ protocol_stats_data_source|safe }}
+        })
+        .render();
+    });
     </script>
 
     <script type="text/javascript">
@@ -88,7 +78,7 @@
             type: 'msline',
             renderAt: 'protocols-time-series-div',
             width: '100%',
-            height: '600',
+            height: '400',
             dataFormat: 'json',
             dataSource: {{ protocols_time_series_data|safe }}
         });

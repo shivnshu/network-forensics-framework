@@ -106,6 +106,7 @@ def main(capture_file):
     chart_dict = {
         "chart":
         {
+            "caption": "Protocols Hierarchy",
             "showPlotBorder": "1",
             "piefillalpha": "60",
             "pieborderthickness": "2",

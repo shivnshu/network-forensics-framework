@@ -43,7 +43,7 @@ def analyse(request):
 def arp(request):
     uploaded_file_url = request.GET.get('uploaded_file_url', '')
     chart_dict_all = arp_analysis.main(uploaded_file_url.lstrip('/'))
-    return render(request, 'arp.html', {'chart_dict_all': chart_dict_all["chart_data"], 'metadata': chart_dict_all["metadata"]})
+    return render(request, 'arp.html', {'chart_dict_all': chart_dict_all["chart_data"], 'metadata': chart_dict_all["metadata"], 'uploaded_file_url': uploaded_file_url})
 
 
 def darknet(request):
@@ -54,7 +54,8 @@ def darknet(request):
         "src_ip_class_dist": chart_dict_all["src_ip_class_dist"],
         "dst_ip_class_dist": chart_dict_all["dst_ip_class_dist"],
         "tcp_targeted_ports": chart_dict_all["tcp_targeted_ports"],
-        "udp_targeted_ports":chart_dict_all["udp_targeted_ports"]})
+        "udp_targeted_ports":chart_dict_all["udp_targeted_ports"],
+        'uploaded_file_url': uploaded_file_url})
 
 
 def dhcp(request):
@@ -64,7 +65,7 @@ def dhcp(request):
 def dns(request):
     uploaded_file_url = request.GET.get('uploaded_file_url', '')
     dns_detection_dicts = dns_analysis.main(uploaded_file_url.lstrip('/'))
-    return render(request, 'dns.html', {'dns_detection_dicts': dns_detection_dicts})
+    return render(request, 'dns.html', {'dns_detection_dicts': dns_detection_dicts, 'uploaded_file_url': uploaded_file_url})
 
 def dos(request):
     return render(request, 'dos.html')
@@ -73,7 +74,7 @@ def dos(request):
 def port_scanning(request):
     uploaded_file_url = request.GET.get('uploaded_file_url', '')
     port_scanning_dicts = port_scanning_analysis.main(uploaded_file_url.lstrip('/'))
-    return render(request, 'port_scanning.html', {'port_scanning_dicts': port_scanning_dicts})
+    return render(request, 'port_scanning.html', {'port_scanning_dicts': port_scanning_dicts, 'uploaded_file_url': uploaded_file_url})
 
 
 def sessions(request):
@@ -84,7 +85,7 @@ def sessions(request):
 def smtp(request):
     uploaded_file_url = request.GET.get('uploaded_file_url', '')
     smtp_dissections = smtp_analysis.main(uploaded_file_url.lstrip('/'))
-    return render(request, 'smtp.html', {'smtp_dissections': smtp_dissections})
+    return render(request, 'smtp.html', {'smtp_dissections': smtp_dissections, 'uploaded_file_url': uploaded_file_url})
 
 def about(request):
     return render(request, 'about.html')

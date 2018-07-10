@@ -6,4 +6,14 @@ $(document).ready(function(){
         document.getElementById('customFileLabel').innerHTML = file.name;
     }
 
+        /* Set the width of the side navigation to 250px */
+    window.openNav = function() {
+        document.getElementById("mySidenav").style.width = "350px";
+    }
+
+    /* Set the width of the side navigation to 0 */
+    window.closeNav = function() {
+        document.getElementById("mySidenav").style.width = "0";
+    } 
+
 });

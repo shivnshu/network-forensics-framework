@@ -29,7 +29,10 @@ def main(capture_file):
     diff_timestamp = max_timestamp - min_timestamp
     # print(diff_timestamp)
     time_interval = diff_timestamp / x_axis_data_count
-    x_axis_labels = list(range(int(min_timestamp), int(max_timestamp), int(time_interval)))
+    time_interval = int(time_interval)
+    if time_interval == 0:
+        time_interval = 1
+    x_axis_labels = list(range(int(min_timestamp), int(max_timestamp), time_interval))
     # print(x_axis_labels)
 
     protocols_time_series["x_axis_labels"] = x_axis_labels

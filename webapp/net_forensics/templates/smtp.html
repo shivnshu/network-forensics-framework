@@ -1,10 +1,21 @@
 {% extends 'base.html' %}
-{% load staticfiles %}
 
 {% block content %}
 {% if smtp_dissections %}
 
-{{ smtp_dissections }}
+{% for smtp_dissection in smtp_dissections %}
+
+{{ smtp_dissection.title }}
+
+<div style="overflow-y: scroll; height: 80%;">
+{% for content in smtp_dissection.content %}
+    <p style="margin: 1%;">
+    {{ content }}
+    </p>
+{% endfor %}
+</div>
+
+{% endfor %}
 
 {% endif %}
 {% endblock %}

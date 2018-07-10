@@ -5,9 +5,13 @@
 {% block content %}
 {% if metadata %}
 
-{% for mdata in metadata %}
-<a href="#" data-toggle="#arp-info-{{ mdata.div_id }}">{{ mdata.target_ip }}</a>
-{% endfor %}
+<div style="text-align: center;">
+    <ul class="list-inline">
+    {% for mdata in metadata %}
+        <li class="list-inline-item arp-info-toggle"><a href="#" data-toggle="#arp-info-{{ mdata.div_id }}">{{ mdata.target_ip }}</a></li>
+    {% endfor %}
+    </ul>
+</div>
 
 {% for mdata in metadata %}
 

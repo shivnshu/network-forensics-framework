@@ -63,7 +63,7 @@ def main(capture_file):
         first_dict['label'] = first
         first_dict['color'] = protocol_color[first]
         first_dict['value'] = first_protocols[first]['count']
-        first_dict['tooltext'] = first + ", $valueK, $percentValue"
+        first_dict['tooltext'] = first + ", $value"
         first_dict['category'] = []
 
         second_protocols = first_protocols[first]['proto']
@@ -73,7 +73,7 @@ def main(capture_file):
             second_dict['label'] = second
             second_dict['color'] = protocol_color[second]
             second_dict['value'] = second_protocols[second]['count']
-            second_dict['tooltext'] = second + ", $$valueK, $percentValue"
+            second_dict['tooltext'] = second + ", $value"
             second_dict['category'] = []
 
             third_protocols = second_protocols[second]['proto']
@@ -83,7 +83,7 @@ def main(capture_file):
                 third_dir['label'] = third
                 third_dir['color'] = protocol_color[third]
                 third_dir['value'] = third_protocols[third]['count']
-                third_dir['tooltext'] = third + ", $$valueK, $percentValue"
+                third_dir['tooltext'] = third + ", $value"
                 third_dir['category'] = []
 
                 fourth_protocols = third_protocols[third]['proto']
@@ -93,7 +93,7 @@ def main(capture_file):
                     fourth_dir['label'] = fourth
                     fourth_dir['color'] = protocol_color[fourth]
                     fourth_dir['value'] = fourth_protocols[fourth]['count']
-                    fourth_dir['tooltext'] = fourth + ", $$valueK, $percentValue"
+                    fourth_dir['tooltext'] = fourth + ", $value"
 
                     third_dir['category'].append(fourth_dir)
 
@@ -113,7 +113,7 @@ def main(capture_file):
             "piebordercolor": "#FFFFFF",
             "hoverfillcolor": "#CCCCCC",
             "numberPrefix": "$",
-            "plottooltext": "$label, $$valueK, $percentValue",
+            "plottooltext": "$label, $value",
             "theme": "fint"
         },
         "category": protocol_category

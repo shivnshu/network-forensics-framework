@@ -117,3 +117,14 @@
     font-size: 36px;
     margin-left: 50px;
 }
+
+.arp-info-toggle {
+    margin: -11px;
+    padding: 5px;
+    background-color: grey;
+}
+
+.arp-info-toggle a {
+    text-decoration: none !important;
+    color: white;
+}

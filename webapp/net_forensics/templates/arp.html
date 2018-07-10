@@ -4,18 +4,25 @@
 
 {% block content %}
 {% if metadata %}
+
+{% for mdata in metadata %}
+<a href="#" data-toggle="#arp-info-{{ mdata.div_id }}">{{ mdata.target_ip }}</a>
+{% endfor %}
+
 {% for mdata in metadata %}
 
-<div id="{{ mdata.target_ip }}" style="float: left;">FusionCharts XT will load here!</div>
-<div id="arp-attacker-info">
-    <h4 style="font-weight: bold;">Attacker Information</h4>
-    <p><b>Attacker MAC Address: </b>{{ mdata.attacker_mac }}</p>
-    <p><b>No. of spoofed packets: </b>{{ mdata.num_spoofed_pkts }}</p>
-    <p><b>First spoofed pkt time: </b>{{ mdata.first_spoofed_pkt_time }}</p>
-    <p><b>Last spoofed pkt time: </b>{{ mdata.last_spoofed_pkt_time }}</p>
-    <p><b>Victim IP Address: </b>{{ mdata.victim_ips }}</p>
-    <p><b>Attacker IP Address: </b>{{ mdata.attacker_ip }}</p>
-    <p><b>Target IP Address: </b>{{ mdata.target_ip }}</p>
+<div id="arp-info-{{ mdata.div_id }}" class="arp-info-divs" style="display: none;">
+    <div id="{{ mdata.target_ip }}" style="">FusionCharts XT will load here!</div>
+    <div id="arp-attacker-info">
+        <h4 style="font-weight: bold;">Attacker Information</h4>
+        <p><b>Attacker MAC Address: </b>{{ mdata.attacker_mac }}</p>
+        <p><b>No. of spoofed packets: </b>{{ mdata.num_spoofed_pkts }}</p>
+        <p><b>First spoofed pkt time: </b>{{ mdata.first_spoofed_pkt_time }}</p>
+        <p><b>Last spoofed pkt time: </b>{{ mdata.last_spoofed_pkt_time }}</p>
+        <p><b>Victim IP Address: </b>{{ mdata.victim_ips }}</p>
+        <p><b>Attacker IP Address: </b>{{ mdata.attacker_ip }}</p>
+        <p><b>Target IP Address: </b>{{ mdata.target_ip }}</p>
+    </div>
 </div>
 
 {% endfor %}
@@ -31,7 +38,7 @@
     var fusioncharts = new FusionCharts({
     type: 'msline',
     renderAt: '{{ chart_dict.chart.subCaption }}',
-    width: '40%',
+    width: '80%',
     height: '600',
     dataFormat: 'json',
     dataSource: {{ chart_dict|safe }}
@@ -40,6 +47,18 @@
     });
     </script>
 {% endfor %}
+
+    <script type="text/javascript">
+     $(document).ready(function() {
+         $('.arp-info-divs').first().show()
+         $("a[data-toggle]").on("click", function(e) {
+             e.preventDefault();  // prevent navigating
+             var selector = $(this).data("toggle");  // get corresponding element
+             $(".arp-info-divs").hide();
+             $(selector).show();
+         });
+     });
+    </script>
 
 {% endblock %}
 

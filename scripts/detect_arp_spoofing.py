@@ -13,8 +13,8 @@ def main(capture_file):
     for pkt in packets:
         if not ARP in pkt: # checking the ARP Packet
                 continue
-        if pkt[ARP].op != 2: # Filter only reply packets
-                continue
+        # if pkt[ARP].op != 2: # Filter only reply packets
+               # continue
         mac = pkt[ARP].hwsrc # Extracting mac address
         ip = pkt[ARP].psrc  # Extracting ip address
         victim_ip = pkt[ARP].pdst
@@ -33,6 +33,7 @@ def main(capture_file):
             ip_mac_dict[ip].append((mac, timestamp, victim_ip))
     # DEBUG
     # print(mac_ip_dict)
+    # print(ip_mac_dict)
     # Filter dict
     arp_detect_dict = {}
     for ip in ip_mac_dict:

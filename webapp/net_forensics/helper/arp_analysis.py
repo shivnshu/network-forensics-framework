@@ -18,10 +18,10 @@ def pretty_time(seconds):
 def main(capture_file):
     ip_mac_dict, mac_ip_dict = detect_arp_spoofing.main(capture_file)
 
-    category_list = []
-    dataset_list = []
     chart_dict_all = {"metadata": [], "chart_data": []}
     for ip in ip_mac_dict:
+        category_list = []
+        dataset_list = []
         min_timestamp = time.time()
         max_timestamp = 0
         timestamp_list = []
@@ -126,7 +126,8 @@ def main(capture_file):
                 "first_spoofed_pkt_time": pretty_time(first_spoofed_pkt_time),
                 "last_spoofed_pkt_time": pretty_time(last_spoofed_pkt_time),
                 "victim_ips": ip_mac_dict[ip][attacker_mac]["victim_ips"],
-                "attacker_ip": attacker_ip}
+                "attacker_ip": attacker_ip,
+                "div_id": ip.replace('.', '')}
         chart_dict_all["metadata"].append(new_dict)
 
     return chart_dict_all

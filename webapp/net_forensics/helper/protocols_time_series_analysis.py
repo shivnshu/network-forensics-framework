@@ -33,7 +33,7 @@ def main(capture_file):
 
             "chart": {
             "caption": "Protocols Time Series",
-            "subCaption": "sub",
+            "subCaption": "",
             "numberprefix": "",
             "plotgradientcolor": "",
             "bgcolor": "FFFFFF",

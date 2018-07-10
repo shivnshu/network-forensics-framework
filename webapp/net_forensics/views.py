@@ -13,6 +13,7 @@ from .helper import dns_analysis
 from .helper import darknet_analysis
 from .helper import sessions_analysis
 from .helper import smtp_analysis
+from .helper import dos_analysis
 
 
 def index(request):
@@ -68,7 +69,14 @@ def dns(request):
     return render(request, 'dns.html', {'dns_detection_dicts': dns_detection_dicts, 'uploaded_file_url': uploaded_file_url})
 
 def dos(request):
-    return render(request, 'dos.html')
+    uploaded_file_url = request.GET.get('uploaded_file_url', '')
+    dos_detection_dicts = dos_analysis.main(uploaded_file_url.lstrip('/'))
+    ping_attack_list = dos_detection_dicts["ping"]
+    land_attack_list = dos_detection_dicts["land"]
+    mail_attack_list = dos_detection_dicts["mail"]
+    return render(request, 'dos.html', {'ping_attack_list': ping_attack_list, 
+        'land_attack_list': land_attack_list,
+        'mail_attack_list': mail_attack_list})
 
 
 def port_scanning(request):

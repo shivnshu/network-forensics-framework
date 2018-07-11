@@ -21,21 +21,26 @@ def index(request):
 
 
 def analyse(request):
-    if not request.method == 'POST':
-        return index(request)
-    try:
-        myfile = request.FILES['capture_file']
-    except:
-        return index(request)
-    fs = FileSystemStorage()
-    filename = fs.save(myfile.name, myfile)
-    uploaded_file_url = fs.url(filename)
+    if request.method == 'POST':
+        try:
+            myfile = request.FILES['capture_file']
+        except:
+            return index(request)
+        fs = FileSystemStorage()
+        filename = fs.save(myfile.name, myfile)
+        uploaded_file_url = fs.url(filename)
+    else:
+        try:
+            uploaded_file_url = request.GET.get('uploaded_file_url', '')
+            if len(uploaded_file_url) == 0:
+                raise Exception
+        except:
+            return index(request)
     chart_dict = protocol_hierarchy_analysis.main(uploaded_file_url.lstrip('/'))
     protocol_stats_data_source = protocol_hierarchy_analysis.chart_dict_to_stats(chart_dict)
     protocols_time_series_dict = protocols_time_series_analysis.main(uploaded_file_url.lstrip('/'))
     return render(request, 'analyse.html', \
             {'uploaded_file_url': uploaded_file_url, \
-             'uploaded_file_name': myfile.name, \
               'protocols_analysis_data_source': json.dumps(chart_dict), \
               'protocol_stats_data_source': json.dumps(protocol_stats_data_source), \
              'protocols_time_series_data': json.dumps(protocols_time_series_dict)})

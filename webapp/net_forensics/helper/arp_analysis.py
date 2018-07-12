@@ -85,6 +85,8 @@ def main(capture_file):
             "caption": "IP Mac Mapping Stats",
             "subCaption": ip,
             "numberprefix": "",
+            "xAxisName": "Time",
+            "yAxisName": "Cumulative no. of packets",
             "plotgradientcolor": "",
             "bgcolor": "FFFFFF",
             "showalternatehgridcolor": "0",

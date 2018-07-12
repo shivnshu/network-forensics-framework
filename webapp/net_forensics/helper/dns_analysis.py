@@ -10,10 +10,16 @@ def pretty_timestamp(time_list):
         year = local_time.tm_year
         month = local_time.tm_mon
         date = local_time.tm_mday
-        hour = local_time.tm_hour
-        min = local_time.tm_min
-        sec = local_time.tm_sec
-        time_str = str(hour)+":"+str(min)+":"+str(sec)+" "+str(month)+"/"\
+        hour = str(local_time.tm_hour)
+        if len(hour) == 1:
+            hour = "0" + hour
+        min = str(local_time.tm_min)
+        if len(min) == 1:
+            min = "0" + min
+        sec = str(local_time.tm_sec)
+        if len(sec) == 1:
+            sec = "0" + sec
+        time_str = hour+":"+min+":"+sec+" "+str(month)+"/"\
             +str(date)+"/"+str(year)
         return time_str
     for i in range(len(time_list)):

@@ -23,14 +23,14 @@ def main(capture_file):
                     ip_dict_mail["src_ip"] = sip
                     ip_dict_mail["dst_ip"] = dip
 
-            if not ip_dict_mail in dict_all["mail"]:
+            if len(ip_dict_mail) > 0 and not ip_dict_mail in dict_all["mail"]:
                 dict_all["mail"].append(ip_dict_mail)
 
             if pkt[TCP].sport == pkt[TCP].dport and pkt[IP].src == pkt[IP].dst:
                 ip_dict_land["src_ip"] = sip
                 ip_dict_land["dst_ip"] = dip
 
-            if not ip_dict_land in dict_all["land"]:
+            if len(ip_dict_land) > 0 and not ip_dict_land in dict_all["land"]:
                 dict_all["land"].append(ip_dict_land)
 
         if ICMP in pkt:
@@ -44,7 +44,7 @@ def main(capture_file):
             if pkt[ICMP].type == 8 and len(pkt.load) > 50 and k > 3500:
                 ip_dict_ping["src_ip"] = sip
                 ip_dict_ping["dst_ip"] = dip
-            if not ip_dict_ping in dict_all["ping"]:
+            if len(ip_dict_ping) > 0 and not ip_dict_ping in dict_all["ping"]:
                 dict_all["ping"].append(ip_dict_ping)
     return dict_all
 

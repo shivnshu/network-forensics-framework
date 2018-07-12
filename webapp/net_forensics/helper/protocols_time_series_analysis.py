@@ -1,9 +1,24 @@
 #!/usr/bin/env python3
 import sys, os
+import time
 import yaml
 sys.path.append(os.path.join(os.path.dirname(__file__), '..', 'scripts'))
 import protocols_time_series
 
+def pretty_time(t):
+    local_time = time.localtime(t)
+    hour = str(local_time.tm_hour)
+    if len(hour) == 1:
+        hour = "0" + hour
+    minutes = str(local_time.tm_min)
+    if len(minutes) == 1:
+        minutes = "0" + minutes
+    seconds = str(local_time.tm_sec)
+    if len(seconds) == 1:
+        seconds = "0" + seconds
+    str_time = hour + ":" + minutes + \
+            ":" + seconds
+    return str_time
 
 def main(capture_file):
     _script_dir = os.path.dirname(os.path.abspath(__file__))
@@ -16,7 +31,7 @@ def main(capture_file):
     dataset_list = []
     for t in protocols_time_series_dict["x_axis_labels"]:
         new_dict = {}
-        new_dict["label"] = t
+        new_dict["label"] = pretty_time(t)
         new_dict['stepSkipped'] = 'false'
         new_dict['appliedSmartLabel'] = 'true'
         category_list.append(new_dict)
@@ -34,24 +49,13 @@ def main(capture_file):
             "chart": {
             "caption": "Protocols Time Series",
             "subCaption": "",
+            "xAxisName": "Time",
+            "yAxisName": "No. of packets",
+            "labelDisplay": "rotate",
+            "slantLabel": "1",
             "numberprefix": "",
-            "plotgradientcolor": "",
-            "bgcolor": "FFFFFF",
-            "showalternatehgridcolor": "0",
-            "divlinecolor": "CCCCCC",
-            "showvalues": "0",
-            "showLabels": "0",
-            "showcanvasborder": "0",
-            "canvasborderalpha": "0",
-            "canvasbordercolor": "CCCCCC",
-            "canvasborderthickness": "1",
-            "captionpadding": "30",
-            "linethickness": "3",
-            "yaxisvaluespadding": "15",
-            "legendshadow": "0",
-            "legendborderalpha": "0",
-            "palettecolors": "#f8bd19,#008ee4,#33bdda,#e44a00,#6baa01,#583e78",
-            "showborder": "0"
+            "theme": "fint",
+            "showvalues": "0"
             },
 
             "categories": [

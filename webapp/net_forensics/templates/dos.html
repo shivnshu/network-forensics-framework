@@ -4,8 +4,6 @@
 {% block content %}
 
 {% if ping_attack_list %}
-<h4>Ping Attack Detection</h4>
-
 {% for ping_attack_info in ping_attack_list %}
 <div class="row dos-connection-info">
     <div class="col-3">
@@ -23,6 +21,7 @@
         <p><b>Victim IP: </b></p>
     </div>
     <div class="col-6">
+        <p><b>Attack Type: </b>Ping Death</p>
     </div>
     <div class="col-3">
         <p><b>Attacker IP: </b></p>
@@ -34,8 +33,6 @@
 
 
 {% if land_attack_list %}
-<h4>Land Attack Detection</h4>
-
 {% for land_attack_info in land_attack_list %}
 <div class="row dos-connection-info">
     <div class="col-3">
@@ -54,6 +51,7 @@
         <p><b>Victim IP: </b></p>
     </div>
     <div class="col-6">
+        <p><b>Attack Type: </b>Land Attack</p>
     </div>
     <div class="col-3">
         <p><b>Attacker IP: </b></p>
@@ -61,12 +59,9 @@
 </div>
 
 {% endfor %}
-
 {% endif %}
 
 {% if mail_attack_list %}
-<h4>Mail Attack Detection</h4>
-
 {% for mail_attack_info in mail_attack_list %}
 <div class="row dos-connection-info">
     <div class="col-3">
@@ -85,6 +80,7 @@
         <p><b>Victim IP: </b></p>
     </div>
     <div class="col-6">
+        <p><b>Attack Type: </b>Mail Bomb Attack</p>
     </div>
     <div class="col-3">
         <p><b>Attacker IP: </b></p>

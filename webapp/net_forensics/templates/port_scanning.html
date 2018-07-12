@@ -2,6 +2,11 @@
 {% load staticfiles %}
 
 {% block content %}
+
+<div style="text-align: center; margin-top: -20px;">
+    <h3 style="font-weight: bolder;">Port Scanning Analysis</h3>
+</div>
+
 {% if port_scanning_dicts %}
 {% for port_scanning_dict in port_scanning_dicts %}
 

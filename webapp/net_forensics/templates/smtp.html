@@ -1,6 +1,11 @@
 {% extends 'base.html' %}
 
 {% block content %}
+
+<div style="text-align: center; margin-top: -20px;">
+    <h3 style="font-weight: bolder;">SMTP Analysis</h3>
+</div>
+
 {% if smtp_dissections %}
 
 {% for smtp_dissection in smtp_dissections %}

@@ -37,19 +37,19 @@ def main(capture_file):
 
     protocols_time_series["x_axis_labels"] = x_axis_labels
     protocols_y_axis_data = protocols_time_series["y_axis_data"]
-    protocols_y_axis_data["tcp"] = [0] * len(x_axis_labels)
-    protocols_y_axis_data["udp"] = [0] * len(x_axis_labels)
-    protocols_y_axis_data["icmp"] = [0] * len(x_axis_labels)
+    protocols_y_axis_data["TCP"] = [0] * len(x_axis_labels)
+    protocols_y_axis_data["UDP"] = [0] * len(x_axis_labels)
+    protocols_y_axis_data["ICMP"] = [0] * len(x_axis_labels)
 
     for pkt in packets:
         pkt_time = pkt.time
         x_axis_labels_index = lying_position(pkt_time, x_axis_labels)
         if TCP in pkt:
-            protocols_y_axis_data["tcp"][x_axis_labels_index] += 1
+            protocols_y_axis_data["TCP"][x_axis_labels_index] += 1
         elif UDP in pkt:
-            protocols_y_axis_data["udp"][x_axis_labels_index] += 1
+            protocols_y_axis_data["UDP"][x_axis_labels_index] += 1
         elif ICMP in pkt:
-            protocols_y_axis_data["icmp"][x_axis_labels_index] += 1
+            protocols_y_axis_data["ICMP"][x_axis_labels_index] += 1
 
     return protocols_time_series
 

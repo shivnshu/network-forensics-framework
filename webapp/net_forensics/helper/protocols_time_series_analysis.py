@@ -25,6 +25,10 @@ def main(capture_file):
     r = open(_script_dir + "/../scripts/data/protocols.yaml")
     protocols_color_dict = yaml.load(r)
 
+    protocol_color = {}
+    for protocol_color_dict in protocols_color_dict:
+        protocol_color[protocol_color_dict['name']] = protocol_color_dict['color']
+
     protocols_time_series_dict = protocols_time_series.main(capture_file)
 
     category_list = []
@@ -39,6 +43,7 @@ def main(capture_file):
     for proto in protocols_time_series_dict["y_axis_data"]:
         new_dict = {}
         new_dict['seriesname'] = proto
+        new_dict['color'] = protocol_color[proto]
         new_dict['data'] = []
         for v in protocols_time_series_dict["y_axis_data"][proto]:
             new_dict['data'].append({'value': v})

@@ -61,7 +61,10 @@ def store_detect(pkt):
 
     # Request pkt tuple generation and storage
     if (dns.qr == 0): # Query pkt
-        t = ('Qry', ip.src, ip.dst, dns.qd.qname)
+        try:
+            t = ('Qry', ip.src, ip.dst, dns.qd.qname)
+        except:
+            return
         dns_dict[dns.id] = set()
         # Add tuple to dns_dict[dns_id] set
         dns_dict[dns.id].add(t)
@@ -93,9 +96,11 @@ def store_detect(pkt):
                 l = l.payload
             # ans = ans[:len(ans)-1]
 
-        t = ('Ans', ip.src, ip.dst, dns.qd.qname, str(ans), dns.ancount,
-                dns.nscount, dns.arcount)
-        dns_dict[dns.id].add(t)
+        try:
+            t = ('Ans', ip.src, ip.dst, dns.qd.qname, str(ans), dns.ancount, dns.nscount, dns.arcount)
+            dns_dict[dns.id].add(t)
+        except:
+            return
 
     # Spoofing Detection Logic
     if (len(dns_dict[dns.id]) > 2):

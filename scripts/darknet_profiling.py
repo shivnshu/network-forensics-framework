@@ -66,7 +66,7 @@ def main(capture_file):
     # Get script directory absolute path
     script_dir = os.path.dirname(os.path.abspath(__file__)) + "/"
     # Darknet list absolute path
-    darknet_file = os.path.join(script_dir, "darknet.list")
+    darknet_file = os.path.join(script_dir, "data/darknet.list")
     # Create and store the list of darknet IPs from the file
     darknet_ips = open(darknet_file, "r").read().splitlines()
     # print(darknet_ips)

@@ -39,7 +39,10 @@ def main(pcap_file):
     smtp_dissections = []
 
     for session in sessions:
-        session_list = ast.literal_eval(session) # convert str(list) to list
+        try:
+            session_list = ast.literal_eval(session) # convert str(list) to list
+        except:
+            continue
         # Consider only SMTP communication
         if not ('TCP' in session_list and (25 in session_list or \
                                             465 in session_list or \

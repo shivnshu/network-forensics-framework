@@ -65,7 +65,8 @@ def darknet(request):
 
 
 def dhcp(request):
-    return render(request, 'dhcp.html')
+    uploaded_file_url = request.GET.get('uploaded_file_url', '')
+    return render(request, 'dhcp.html', {'uploaded_file_url': uploaded_file_url})
 
 
 def dns(request):
@@ -83,6 +84,7 @@ def dos(request):
         information_dict["land_attack_list"] = dos_detection_dicts['land']
     if len(dos_detection_dicts['mail']) > 0:
         information_dict["mail_attack_list"] = dos_detection_dicts['mail']
+    information_dict["uploaded_file_url"] = uploaded_file_url
     return render(request, 'dos.html', information_dict)
 
 
@@ -95,7 +97,7 @@ def port_scanning(request):
 def sessions(request):
     uploaded_file_url = request.GET.get('uploaded_file_url', '')
     sessions_info = sessions_analysis.main(uploaded_file_url.lstrip('/'))
-    return render(request, 'sessions.html', {'sessions_info': sessions_info})
+    return render(request, 'sessions.html', {'sessions_info': sessions_info, 'uploaded_file_url': uploaded_file_url})
 
 def smtp(request):
     uploaded_file_url = request.GET.get('uploaded_file_url', '')

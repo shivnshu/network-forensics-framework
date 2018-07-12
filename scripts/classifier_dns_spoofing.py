@@ -84,7 +84,7 @@ if __name__ == "__main__":
         dataset_location = argv[1]
     else:
         # Default dataset location
-        dataset_location = os.path.join(script_dir, '../dataset')
+        dataset_location = os.path.join(script_dir, '../captures/dataset')
     
     # For now, test on same dataset
     main(dataset_location, dataset_location)

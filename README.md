@@ -1,5 +1,5 @@
 # network-forensics-framework
-[![Build Status](https://travis-ci.com/shivnshu/network-forensics.svg?token=xzu4Fpk8ohJLJEshzQEf&branch=master)](https://travis-ci.com/shivnshu/network-forensics)
+[![Build Status](https://travis-ci.com/shivnshu/network-forensics-framework.svg?branch=master)](https://travis-ci.com/shivnshu/network-forensics-framework)
 
 ## Directory Structure
 ```
@@ -30,8 +30,18 @@
 ## Installation
 
 ### Docker Installation
+1. In the cloned directory, run `docker build . -t <chosen-image-name>`.
+2. To start the server, run `docker run -p 8000:8000 -v $(pwd):/network-forensics-framework <chosen-image-name>` from the same directory.
+3. Access the web inteface through url http://localhost:8000
 
 ### Native Installation
+#### NixOS
+1. From the cloned directory, run `nix-shell default.nix`.
+2. To start the server, run `cd webapp && python3 manage.py runserver`.
+#### Others
+1. First install dependencies namely `python3` and `python3-pip`.
+2. Run `pip3 install -r requirements.txt`.
+3. To start server, run `cd webapp && python3 manage.py runserver`.
 
 ## Screenshots
 ![](screenshots/analyse.png)

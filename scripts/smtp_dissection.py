@@ -78,7 +78,8 @@ def main(pcap_file):
                 new_smtp_dissection_dict['content'].append(content)
             except:
                 pass
-        smtp_dissections.append(new_smtp_dissection_dict)
+        if len(new_smtp_dissection_dict['content']) > 0:
+            smtp_dissections.append(new_smtp_dissection_dict)
 
     return smtp_dissections
 
